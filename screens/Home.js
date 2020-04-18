@@ -10,7 +10,7 @@ const Home = ({ navigation }) => {
     const [enteredVal, setEnteredVal] = useState('');
 
     const navigateHistoryHandler = () => {
-        navigation.navigate('History')
+        navigation.navigate('History', {navigatedTo: true})
     }
 
     const numberInputHandler = inputText => {

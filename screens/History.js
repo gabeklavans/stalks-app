@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { StyleSheet, Text, View, TextInput, FlatList, AsyncStorage, Alert, TouchableWithoutFeedback } from 'react-native'
 import { Container, Content, Button } from 'native-base'
 
-const History = () => {
+const History = ({route}) => {
     const [priceData, setPriceData] = useState([]);
 
     const retrievePriceHistory = async () => {
@@ -37,18 +37,19 @@ const History = () => {
 
     // retrievePriceHistory();
 
-    console.log(priceData)
+    if (route.params.navigatedTo) {
+        retrievePriceHistory();
+        route.params.navigatedTo = false;
+    }
 
     return (
         <View>
-            {/* <Button onPress={retrievePriceHistory()}>
+            {/* <Button onPress={retrievePriceHistory}>
                 <Text>Get data</Text>
             </Button> */}
-            <TouchableWithoutFeedback onPress={retrievePriceHistory()}>
                 <FlatList data={priceData} renderItem={itemData => (
                     <Text>{itemData.item.value}</Text>
                 )} />
-            </TouchableWithoutFeedback>
 
         </View>
     )
