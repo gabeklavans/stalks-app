@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions } from 'react-native'
-import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View } from 'native-base';
+import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View, ListItem, CheckBox, Switch } from 'native-base';
 
 import _ from "lodash";
 import { PriceContext, FirstBuyContext, PatternContext } from '../components/GlobalContext';
@@ -13,6 +13,7 @@ const Home = ({ navigation, route }) => {
     const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyText, setFirstBuyText] = useState('No');
+    const [firstBuyToggle, setFirstBuyToggle] = useState(false);
     // console.log(route)
 
     const setPriceHandler = (day, time, price) => {
@@ -24,14 +25,20 @@ const Home = ({ navigation, route }) => {
         });
     }
 
+    const firstBuyToggleHandler = () => {
+        setFirstBuyToggle(!firstBuyToggle);
+    }
+
     const firstTimeButtonHandler = () => {
-        if (firstBuy) {
-            setFirstBuy(false);
-            setFirstBuyText('No')
-        } else {
-            setFirstBuy(true);
-            setFirstBuyText('Yes')
-        }
+        setFirstBuy(!firstBuy);
+        setFirstBuyToggle(!firstBuyToggle);
+        // if (firstBuy) {
+            
+        //     setFirstBuyText('No')
+        // } else {
+        //     setFirstBuy(true);
+        //     setFirstBuyText('Yes')
+        // }
     }
 
     const submitInputHandler = async price => {
@@ -59,24 +66,26 @@ const Home = ({ navigation, route }) => {
                     <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
                     <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
                     <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Text>First buy on your island?</Text>
+                        {/* <Text>First buy on your island?</Text>
                         <View style={{ width: '20%' }}>
                             <Button style={{ backgroundColor: Colors.iconBackground }} block small onPress={firstTimeButtonHandler} >
                                 <Text>{firstBuyText}</Text>
                             </Button>
-                        </View>
+                        </View> */}
+                        <Text>First buy on your island?</Text>
+                        <Switch onValueChange={firstTimeButtonHandler} value={firstBuyToggle} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text>Pattern:</Text>
+                        <Text>Last Pattern:</Text>
                         <Form>
                             <Picker
                                 iosHeader="Pattern"
                                 iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
                                 mode='dialog'
-                                style={{ width: 140 }}
+                                style={{ width: 150 }}
                                 selectedValue={pattern}
                                 onValueChange={setPattern}
-                                textStyle={{color: '#007aff'}}
+                                textStyle={{ color: '#007aff' }}
                             >
                                 <Picker.Item label="I don't know..." value={-1} />
                                 <Picker.Item label='Fluctuating' value={0} />
