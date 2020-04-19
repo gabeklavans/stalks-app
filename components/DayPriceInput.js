@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        marginVertical: 10,
-        height: 48
+        marginVertical: '3%',
+        height: '7.5%'
     },
     input: {
-        width: 100
+        width: 90,
+        height: '100%'
     },
     label: {
         fontSize: 12

@@ -3,7 +3,7 @@ import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView } from 'react-nat
 import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View } from 'native-base';
 
 import _ from "lodash";
-import {PriceContext} from '../components/PriceContext';
+import { PriceContext } from '../components/PriceContext';
 
 import DayPriceInput from '../components/DayPriceInput'
 import Colors from '../assets/Colors';
@@ -22,14 +22,6 @@ const Home = ({ navigation, route }) => {
         });
     }
 
-    // const dayPhaseSelectorHandler = () => {
-    //     if (dayPhase === 'AM') {
-    //         setDayPhase('PM');
-    //     } else if (dayPhase === 'PM') {
-    //         setDayPhase('AM');
-    //     }
-    // }
-
     const submitInputHandler = async price => {
         try {
             // const oldList = await AsyncStorage.getItem('priceHistory')
@@ -42,34 +34,18 @@ const Home = ({ navigation, route }) => {
 
     let submitButton;
 
-    // if (prices > 0) {
-    //     submitButton = (
-    //         <Button block style={{ backgroundColor: Colors.iconBackground }} onPress={() => submitInputHandler(prices)}>
-    //             <Text>Submit!</Text>
-    //         </Button>
-    //     )
-    // } else {
-    //     submitButton = undefined;
-    // }
-
     return (
         <Container>
-            <Content style={{ padding: 20 }}>
-                {/* <View style={styles.button}>
-                    <Button bordered small block primary onPress={navigateHistoryHandler}>
-                        <Text>Go to History</Text>
-                    </Button>
-                </View> */}
+            <Content style={{ padding: '5%' }}>
                 <KeyboardAvoidingView behavior='padding' style={styles.content}>
                     <Text>Enter your turnip prices for the week!</Text>
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={0} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
-                    {submitButton}
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={0} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
                 </KeyboardAvoidingView>
             </Content>
         </Container >
