@@ -10,7 +10,7 @@ import Colors from '../assets/Colors'
 
 const Stack = createStackNavigator();
 
-const HomeStack = () => {
+const HomeStack = ({ route }) => {
     return (
         <Stack.Navigator initialRouteName='Home' screenOptions={navStyles.header}>
             <Stack.Screen name="Home" component={Home} options={navStyles.home} />

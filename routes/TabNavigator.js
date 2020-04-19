@@ -1,5 +1,4 @@
 import React from 'react'
-import { } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -10,7 +9,7 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
     return (
-        <Tab.Navigator screenOptions={style}>
+        <Tab.Navigator screenOptions={style} initialRouteName='Home'>
             <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="Settings" component={Settings} />
         </Tab.Navigator>

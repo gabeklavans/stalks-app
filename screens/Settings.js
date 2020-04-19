@@ -1,18 +1,24 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, Dimensions, SafeAreaView } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { StyleSheet, View, Dimensions, SafeAreaView, Alert } from 'react-native'
 import { Container, Content, Button, Text } from 'native-base';
 import { LineChart, Grid } from 'react-native-svg-charts'
 
+import {PriceContext} from '../components/PriceContext';
 import predict from '../scripts/predictions'
 
-const Settings = () => {
+const Settings = ({ navigation, route }) => {
+    const [prices, setPrices] = useContext(PriceContext);
+
     const [dayMin, setDayMin] = useState([50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]);
     const [dayMax, setDayMax] = useState([10, 23, 22, 100, -10, 0, 0, 0, 0, 0, -10, 0, 0, -3, -51]);
 
     const buttonPressHandler = () => {
-        const nanArray = new Array(12).fill(NaN);
+        const nanArray = new Array(10).fill(NaN);
         // console.log(nanArray)
-        const possibilities = predict([90, 90, ...nanArray], false, 0);
+        // const possibilities = predict([90, 90, 80, 100, ...nanArray], false, 0);
+        let vals = prices.flat().map(string => parseInt(string));
+        // console.log(vals)
+        const possibilities = predict(vals, false, 0);
         setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
         setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
     }
@@ -28,6 +34,13 @@ const Settings = () => {
         },
     ]
 
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // Alert.alert('Yo', 'Haha')
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <Container>
