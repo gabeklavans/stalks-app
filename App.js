@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import {PriceContext} from './components/PriceContext';
+import { PriceContext, FirstBuyContext, PatternContext } from './components/GlobalContext';
 import TabNavigator from './routes/TabNavigator'
 
 export default function App() {
     const pricesInit = new Array(7).fill(new Array(2));
     const [prices, setPrices] = useState(pricesInit);
+    const [firstBuy, setFirstBuy] = useState(false);
+    const [pattern, setPattern] = useState(-1);
 
     return (
         <NavigationContainer>
-            <PriceContext.Provider value={[prices, setPrices]}>
-                <TabNavigator />
-            </PriceContext.Provider>
+            <PatternContext.Provider value={[pattern, setPattern]}>
+                <FirstBuyContext.Provider value={[firstBuy, setFirstBuy]}>
+                    <PriceContext.Provider value={[prices, setPrices]}>
+                        <TabNavigator />
+                    </PriceContext.Provider>
+                </FirstBuyContext.Provider>
+            </PatternContext.Provider>
         </NavigationContainer>
     );
 }

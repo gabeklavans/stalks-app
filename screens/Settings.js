@@ -3,10 +3,12 @@ import { StyleSheet, View, Dimensions, SafeAreaView, Alert } from 'react-native'
 import { Container, Content, Button, Text } from 'native-base';
 import { LineChart, Grid } from 'react-native-svg-charts'
 
-import {PriceContext} from '../components/PriceContext';
+import { PriceContext, FirstBuyContext, PatternContext } from '../components/GlobalContext';
 import predict from '../scripts/predictions'
 
 const Settings = ({ navigation, route }) => {
+    const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
+    const [pattern, setPattern] = useContext(PatternContext);
     const [prices, setPrices] = useContext(PriceContext);
 
     const [dayMin, setDayMin] = useState([50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]);
@@ -18,7 +20,7 @@ const Settings = ({ navigation, route }) => {
         // const possibilities = predict([90, 90, 80, 100, ...nanArray], false, 0);
         let vals = prices.flat().map(string => parseInt(string));
         // console.log(vals)
-        const possibilities = predict(vals, false, 0);
+        const possibilities = predict(vals, firstBuy, pattern);
         setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
         setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
     }
