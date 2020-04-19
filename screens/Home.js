@@ -73,13 +73,16 @@ const Home = ({ navigation, route }) => {
                                 iosHeader="Pattern"
                                 iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
                                 mode='dialog'
-                                style={{ width: 120 }}
+                                style={{ width: 140 }}
                                 selectedValue={pattern}
                                 onValueChange={setPattern}
                                 textStyle={{color: '#007aff'}}
                             >
-                                <Picker.Item label='Fuk u idk' value={-1} />
+                                <Picker.Item label="I don't know..." value={-1} />
                                 <Picker.Item label='Fluctuating' value={0} />
+                                <Picker.Item label='Large Spike' value={1} />
+                                <Picker.Item label='Decreasing' value={2} />
+                                <Picker.Item label='Small Spike' value={3} />
                             </Picker>
                         </Form>
                     </View>
