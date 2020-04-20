@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { StyleSheet, View, Dimensions, SafeAreaView, Alert, Modal, InteractionManager } from 'react-native'
-import { Button, Text } from 'native-base';
+import { Button, Container, Content, Text } from 'native-base';
 import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -8,6 +8,7 @@ import { PriceContext, FirstBuyContext, PatternContext } from '../components/Glo
 import Loader from '../components/Loader'
 import predict from '../scripts/predictions'
 import Chart from '../components/Chart';
+import PatternChart from '../components/PatternChart';
 
 
 const Settings = ({ navigation, route }) => {
@@ -46,7 +47,7 @@ const Settings = ({ navigation, route }) => {
     const buttonPressHandler = () => {
         let vals = prices.flat().map(string => parseInt(string));
 
-        if (vals.every(val => isNaN(val))) {
+        if (vals.every(val => isNaN(val)) && !firstBuy) {
             console.log('No vals in here!')
             setEmptyChart(true);
         } else {
@@ -72,12 +73,13 @@ const Settings = ({ navigation, route }) => {
     }
 
     return (
-        <View style={styles.screen}>
+        <View style={styles.screen} >
             <Loader isLoading={isLoading} />
-            {/* <Button onPress={buttonPressHandler}>
+            {/* <Button>
                 <Text>Get some predictions</Text>
             </Button> */}
             {predictionContent}
+            <PatternChart />
         </View>
     );
 }
@@ -86,8 +88,9 @@ export default Settings
 
 const styles = StyleSheet.create({
     screen: {
-        // padding: 10,
+        padding: 5,
         justifyContent: 'center',
-        alignItems: 'center'
+        // alignItems: 'center',
+        // backgroundColor: 'red'
     }
 })

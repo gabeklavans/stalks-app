@@ -15,20 +15,21 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
-    // console.log(route)
-
+    // Handler for the menu button
     const menuButtonHandler = () => {
         navigation.openDrawer();
     }
 
+    // Set up the drawer menu button
     useLayoutEffect(() => {
         navigation.setOptions({
-          headerLeft: () => (
-          <Button onPress={menuButtonHandler} transparent full style={{justifyContent: 'center'}}><Icon name='ios-menu' style={{fontSize: 30, color: 'white'}}/></Button>
-          ),
+            headerLeft: () => (
+                <Button onPress={menuButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: 'white' }} /></Button>
+            ),
         });
-      }, [navigation]);
+    }, [navigation]);
 
+    // Deep copy the price data and insert this price in the approriate index for that time and day
     const setPriceHandler = (day, time, price) => {
         setPrices(oldPrices => {
             let newPrices = JSON.parse(JSON.stringify(oldPrices));
@@ -43,6 +44,33 @@ const Home = ({ navigation, route }) => {
         setFirstBuyToggle(!firstBuyToggle);
     }
 
+    let buyPriceField;
+
+    if (firstBuy) {
+        buyPriceField = (
+            <Input
+                style={{ textAlign: 'center' }}
+                placeholder='-'
+                placeholderTextColor='rgba(140, 114, 127, 0.6)'
+                disabled
+            />
+        )
+    } else {
+        buyPriceField = (
+            <Input
+                style={{ textAlign: 'center' }}
+                placeholder='Buy Price'
+                placeholderTextColor='rgba(140, 114, 127, 0.6)'
+                keyboardType='number-pad'
+                returnKeyType='done'
+                clearButtonMode='while-editing'
+                maxLength={3}
+                onChangeText={text => { setPriceHandler(0, 0, text); setPriceHandler(0, 1, text); }}
+                value={prices[0][0]}
+            />
+        )
+    }
+
     const submitInputHandler = async price => {
         try {
             // const oldList = await AsyncStorage.getItem('priceHistory')
@@ -53,18 +81,22 @@ const Home = ({ navigation, route }) => {
         }
     }
 
+    // Handler for the get predictions button at the bottom of the screen
     const getPredictionsHandler = () => {
         navigation.navigate('Predictions');
     }
-
-    let submitButton;
 
     return (
         <Container>
             <Content style={{ padding: '5%' }}>
                 <KeyboardAvoidingView behavior='padding' style={styles.content}>
                     <Text>Enter your turnip prices for the week!</Text>
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={0} />
+                    {/* <DayPriceInput handler={setPriceHandler} value={prices} day={0} /> */}
+                    <Form style={styles.form}>
+                        <Item rounded style={styles.input}>
+                            {buyPriceField}
+                        </Item>
+                    </Form>
                     <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
                     <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
                     <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
@@ -72,12 +104,6 @@ const Home = ({ navigation, route }) => {
                     <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
                     <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
                     <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                        {/* <Text>First buy on your island?</Text>
-                        <View style={{ width: '20%' }}>
-                            <Button style={{ backgroundColor: Colors.iconBackground }} block small onPress={firstTimeButtonHandler} >
-                                <Text>{firstBuyText}</Text>
-                            </Button>
-                        </View> */}
                         <Text>First buy on your island?</Text>
                         <Switch onValueChange={firstTimeButtonHandler} value={firstBuyToggle} />
                     </View>
@@ -106,10 +132,10 @@ const Home = ({ navigation, route }) => {
 
             <Footer>
                 <FooterTab >
-                    <Button onPress={getPredictionsHandler} vertical full style={{backgroundColor: 'blue'}}>
+                    <Button onPress={getPredictionsHandler} vertical full style={{ backgroundColor: 'blue' }}>
                         {/* <Icon name='ios-trending-up' /> */}
                         <Ionicons name='ios-trending-up' size={25} color='white' />
-                        <Text style={{color: 'white', fontWeight: 'bold'}}>Get predictions!</Text>
+                        <Text style={{ color: 'white', fontWeight: 'bold' }}>Get predictions!</Text>
                     </Button>
                 </FooterTab>
 
@@ -128,5 +154,15 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * .75,
         justifyContent: 'space-between',
         // backgroundColor: 'red'
+    },
+    form: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+    },
+    input: {
+        width: 140,
+        height: '70%'
     }
 })

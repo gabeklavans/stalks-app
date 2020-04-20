@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { Form, Item, Input, Label } from 'native-base'
+import { Form, Item, Input } from 'native-base'
 
 import Days from '../assets/Days'
 
@@ -50,8 +50,5 @@ const styles = StyleSheet.create({
     input: {
         width: 90,
         height: '70%'
-    },
-    label: {
-        fontSize: 12
     }
 })
