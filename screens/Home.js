@@ -13,7 +13,6 @@ const Home = ({ navigation, route }) => {
     const [prices, setPrices] = useContext(PriceContext);
     const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
     const [pattern, setPattern] = useContext(PatternContext);
-    const [firstBuyText, setFirstBuyText] = useState('No');
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
     // console.log(route)
@@ -39,20 +38,9 @@ const Home = ({ navigation, route }) => {
         });
     }
 
-    const firstBuyToggleHandler = () => {
-        setFirstBuyToggle(!firstBuyToggle);
-    }
-
     const firstTimeButtonHandler = () => {
         setFirstBuy(!firstBuy);
         setFirstBuyToggle(!firstBuyToggle);
-        // if (firstBuy) {
-
-        //     setFirstBuyText('No')
-        // } else {
-        //     setFirstBuy(true);
-        //     setFirstBuyText('Yes')
-        // }
     }
 
     const submitInputHandler = async price => {

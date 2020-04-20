@@ -9,7 +9,7 @@ const Chart = ({ data }) => {
     const verticalContentInset = { top: 10, bottom: 10 }
     const xAxisHeight = 30
 
-    const xAxis = ['S', 'M', 'M', 'T', 'T', 'W', 'W', 'Th', 'Th', 'F', 'F', 'S', 'S'];
+    const xAxis = ['Su', 'M', 'M', 'T', 'T', 'W', 'W', 'Th', 'Th', 'F', 'F', 'S', 'S'];
 
     // console.log(data[1].data);
 

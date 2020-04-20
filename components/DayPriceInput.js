@@ -8,7 +8,6 @@ const DayPriceInput = ({ handler, value, day }) => {
     return (
         <Form style={styles.container}>
             <Item rounded style={styles.input}>
-                {/* <Label style={styles.label}>{Days[day].short} AM</Label> */}
                 <Input
                     style={{ textAlign: 'center' }}
                     placeholder='AM'
@@ -23,7 +22,6 @@ const DayPriceInput = ({ handler, value, day }) => {
             </Item>
             <Text style={{width: '15%', textAlign: 'center'}} >{Days[day].short}</Text>
             <Item rounded style={styles.input}>
-                {/* <Label style={styles.label}>{Days[day].short} PM</Label> */}
                 <Input
                     style={{ textAlign: 'center' }}
                     placeholder='PM'
@@ -48,8 +46,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         width: '100%',
-        // marginVertical: '3%',
-        // height: '7.5%'
     },
     input: {
         width: 90,
