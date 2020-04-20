@@ -37,16 +37,16 @@ const History = ({route}) => {
 
     // retrievePriceHistory();
 
-    if (route.params.navigatedTo) {
-        retrievePriceHistory();
-        route.params.navigatedTo = false;
-    }
+    // if (route.params.navigatedTo) {
+    //     retrievePriceHistory();
+    //     route.params.navigatedTo = false;
+    // }
 
     return (
         <View>
-            {/* <Button onPress={retrievePriceHistory}>
+            <Button onPress={retrievePriceHistory}>
                 <Text>Get data</Text>
-            </Button> */}
+            </Button>
                 <FlatList data={priceData} renderItem={itemData => (
                     <Text>{itemData.item.value}</Text>
                 )} />

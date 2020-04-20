@@ -1,6 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useLayoutEffect } from 'react'
 import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions } from 'react-native'
-import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View, ListItem, CheckBox, Switch } from 'native-base';
+import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View, ListItem, CheckBox, Switch, Footer, FooterTab } from 'native-base';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import _ from "lodash";
 import { PriceContext, FirstBuyContext, PatternContext } from '../components/GlobalContext';
@@ -14,7 +15,20 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyText, setFirstBuyText] = useState('No');
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
+
     // console.log(route)
+
+    const menuButtonHandler = () => {
+        navigation.openDrawer();
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          headerLeft: () => (
+          <Button onPress={menuButtonHandler} transparent full style={{justifyContent: 'center'}}><Icon name='ios-menu' style={{fontSize: 30, color: 'white'}}/></Button>
+          ),
+        });
+      }, [navigation]);
 
     const setPriceHandler = (day, time, price) => {
         setPrices(oldPrices => {
@@ -33,7 +47,7 @@ const Home = ({ navigation, route }) => {
         setFirstBuy(!firstBuy);
         setFirstBuyToggle(!firstBuyToggle);
         // if (firstBuy) {
-            
+
         //     setFirstBuyText('No')
         // } else {
         //     setFirstBuy(true);
@@ -49,6 +63,10 @@ const Home = ({ navigation, route }) => {
         } catch (error) {
             Alert.alert('Failed!', 'Price NOT saved', [{ text: 'Darn', style: 'destructive' }])
         }
+    }
+
+    const getPredictionsHandler = () => {
+        navigation.navigate('Predictions');
     }
 
     let submitButton;
@@ -97,6 +115,17 @@ const Home = ({ navigation, route }) => {
                     </View>
                 </KeyboardAvoidingView>
             </Content>
+
+            <Footer>
+                <FooterTab >
+                    <Button onPress={getPredictionsHandler} vertical full style={{backgroundColor: 'blue'}}>
+                        {/* <Icon name='ios-trending-up' /> */}
+                        <Ionicons name='ios-trending-up' size={25} color='white' />
+                        <Text style={{color: 'white', fontWeight: 'bold'}}>Get predictions!</Text>
+                    </Button>
+                </FooterTab>
+
+            </Footer>
         </Container >
     )
 }

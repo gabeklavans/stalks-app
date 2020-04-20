@@ -1,10 +1,14 @@
-import React, { useState, useContext } from 'react'
-import { StyleSheet, View, Dimensions, SafeAreaView, Alert } from 'react-native'
-import { Container, Content, Button, Text } from 'native-base';
-import { LineChart, Grid } from 'react-native-svg-charts'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
+import { StyleSheet, View, Dimensions, SafeAreaView, Alert, Modal, InteractionManager } from 'react-native'
+import { Button, Text } from 'native-base';
+import { useFocusEffect } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { PriceContext, FirstBuyContext, PatternContext } from '../components/GlobalContext';
+import Loader from '../components/Loader'
 import predict from '../scripts/predictions'
+import Chart from '../components/Chart';
+
 
 const Settings = ({ navigation, route }) => {
     const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
@@ -14,55 +18,67 @@ const Settings = ({ navigation, route }) => {
     const [dayMin, setDayMin] = useState([50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]);
     const [dayMax, setDayMax] = useState([10, 23, 22, 100, -10, 0, 0, 0, 0, 0, -10, 0, 0, -3, -51]);
 
-    const buttonPressHandler = () => {
-        const nanArray = new Array(10).fill(NaN);
-        // console.log(nanArray)
-        // const possibilities = predict([90, 90, 80, 100, ...nanArray], false, 0);
-        let vals = prices.flat().map(string => parseInt(string));
-        // console.log(vals)
-        const possibilities = predict(vals, firstBuy, pattern);
-        setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
-        setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
-    }
+    const [isLoading, setIsLoading] = useState(true);
+    const [emptyChart, setEmptyChart] = useState(null);
 
     const data = [
         {
             data: dayMin,
-            svg: { stroke: '#8800cc' },
+            svg: { stroke: 'purple', strokeWidth: 2 },
         },
         {
             data: dayMax,
-            svg: { stroke: 'green' },
+            svg: { stroke: 'green', strokeWidth: 2 },
         },
     ]
 
-    React.useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            // Alert.alert('Yo', 'Haha')
-        });
+    useFocusEffect(
+        useCallback(() => {
+            const task = InteractionManager.runAfterInteractions(() => {
+                buttonPressHandler();
+            });
 
-        return unsubscribe;
-    }, [navigation]);
+            return () => task.cancel();
+
+        }, [prices])
+    )
+
+    const buttonPressHandler = () => {
+        let vals = prices.flat().map(string => parseInt(string));
+
+        if (vals.every(val => isNaN(val))) {
+            console.log('No vals in here!')
+            setEmptyChart(true);
+        } else {
+            let possibilities = predict(vals, firstBuy, pattern);
+
+            setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
+            setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
+
+            setEmptyChart(false);
+        }
+
+        setIsLoading(false);
+    }
+
+    let predictionContent;
+
+    if (emptyChart === null) {
+        predictionContent = <Ionicons name='ios-hourglass' size={30} />
+    } else if (!emptyChart) {
+        predictionContent = (<Chart data={data} />)
+    } else {
+        predictionContent = (<Text>No data to display!</Text>)
+    }
 
     return (
-        <Container>
-            <Content contentContainerStyle={{ padding: 50 }}>
-                <Button onPress={buttonPressHandler}>
-                    <Text>
-                        Get some predictions
-                    </Text>
-                </Button>
-                <LineChart
-                    style={{ height: 200 }}
-                    data={data}
-                    svg={{ stroke: 'rgb(134, 65, 244)' }}
-                    contentInset={{ top: 20, bottom: 20 }}
-                >
-                    <Grid />
-                </LineChart>
-
-            </Content>
-        </Container>
+        <View style={styles.screen}>
+            <Loader isLoading={isLoading} />
+            {/* <Button onPress={buttonPressHandler}>
+                <Text>Get some predictions</Text>
+            </Button> */}
+            {predictionContent}
+        </View>
     );
 }
 
@@ -70,7 +86,7 @@ export default Settings
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
+        // padding: 10,
         justifyContent: 'center',
         alignItems: 'center'
     }

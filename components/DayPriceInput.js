@@ -15,6 +15,7 @@ const DayPriceInput = ({ handler, value, day }) => {
                     placeholderTextColor='rgba(140, 114, 127, 0.6)'
                     keyboardType='number-pad'
                     returnKeyType='done'
+                    clearButtonMode='while-editing'
                     maxLength={3}
                     onChangeText={text => handler(day, 0, text)}
                     value={value[day][0]}
@@ -29,6 +30,7 @@ const DayPriceInput = ({ handler, value, day }) => {
                     placeholderTextColor='rgba(140, 114, 127, 0.6)'
                     keyboardType='number-pad'
                     returnKeyType='done'
+                    clearButtonMode='while-editing'
                     maxLength={3}
                     onChangeText={text => handler(day, 1, text)}
                     value={value[day][1]}

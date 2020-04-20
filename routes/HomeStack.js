@@ -1,10 +1,10 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image } from 'react-native'
+import { Image, Dimensions } from 'react-native'
 import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body } from 'native-base';
 
 import Home from '../screens/Home'
-import History from '../screens/History'
+import Predictions from '../screens/Predictions'
 
 import Colors from '../assets/Colors'
 
@@ -14,7 +14,7 @@ const HomeStack = ({ route }) => {
     return (
         <Stack.Navigator initialRouteName='Home' screenOptions={navStyles.header}>
             <Stack.Screen name="Home" component={Home} options={navStyles.home} />
-            <Stack.Screen name="History" component={History} />
+            <Stack.Screen name="Predictions" component={Predictions} />
         </Stack.Navigator>
     )
 }
@@ -23,9 +23,9 @@ export default HomeStack
 
 const navStyles = {
     header: {
-        headerTintColor: 'yellow',
         headerStyle: {
             height: 80,
+            // height: Dimensions.get('screen').height * 0.12,
             backgroundColor: Colors.iconBackground
         },
         headerTitleStyle: {

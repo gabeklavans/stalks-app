@@ -889,4 +889,7 @@ export default function analyze_possibilities(sell_prices, first_buy, previous_p
 
   // console.log(generated_possibilities);
   return generated_possibilities;
+//   return new Promise(resolve => {
+//       resolve(generated_possibilities);
+//   });
 }
