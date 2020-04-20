@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { PriceContext, FirstBuyContext, PatternContext } from './components/GlobalContext';
 import TabNavigator from './routes/TabNavigator'
+import DrawerNavigator from './routes/DrawerNavigator'
 
 export default function App() {
     const pricesInit = new Array(7).fill(new Array(2));
@@ -16,7 +17,7 @@ export default function App() {
             <PatternContext.Provider value={[pattern, setPattern]}>
                 <FirstBuyContext.Provider value={[firstBuy, setFirstBuy]}>
                     <PriceContext.Provider value={[prices, setPrices]}>
-                        <TabNavigator />
+                        <DrawerNavigator />
                     </PriceContext.Provider>
                 </FirstBuyContext.Provider>
             </PatternContext.Provider>
