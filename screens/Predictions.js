@@ -97,8 +97,10 @@ export default Settings
 
 const styles = StyleSheet.create({
     screen: {
+        flex: 1,
         padding: 5,
         justifyContent: 'center',
+        backgroundColor: 'white'
         // alignItems: 'center',
         // backgroundColor: 'red'
     }

@@ -1,3 +1,4 @@
 export default {
-    iconBackground: '#92B568'
+    iconBackground: '#92B568',
+    splashBackground: '#FF7779'
 }

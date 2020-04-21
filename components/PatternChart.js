@@ -1,10 +1,26 @@
 import React from 'react'
 import { PieChart } from 'react-native-svg-charts'
-import { G, Line, Text } from 'react-native-svg'
-import { Rect } from 'react-native-svg'
-import { Circle } from 'react-native-svg'
+import { G, Text, Circle } from 'react-native-svg'
+import { Button, View } from 'react-native'
 
 const PatternChart = ({ probabilities }) => {
+
+    const Title = ({ height }) => {
+        return (
+            <G>
+                <Text
+                    x={0}
+                    y={-50}
+                    fill={'black'}
+                    textAnchor={'middle'}
+                    alignmentBaseline={'central'}
+                    fontSize={12} >
+                    Ttile
+                </Text>
+            </G>
+
+        )
+    }
 
     const labelMap = [
         { label: 'Fluctuating', color: 'yellow' },
@@ -26,39 +42,10 @@ const PatternChart = ({ probabilities }) => {
         }
     }
 
-    const data2 = [
-        {
-            key: 0,
-            amount: probabilities[0],
-            svg: { fill: 'orange' },
-            label: 'Fluctuating'
-        },
-        {
-            key: 1,
-            amount: 1,
-            svg: { fill: 'yellow' },
-            label: 'Big Spike'
-        },
-        {
-            key: 2,
-            amount: 10,
-            svg: { fill: 'green' },
-            label: 'Decreasing'
-        },
-        {
-            key: 3,
-            amount: 87,
-            svg: { fill: 'violet' },
-            label: 'Small Spike'
-        },
-    ]
-
     const Labels = ({ slices }) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
-            // console.log(slice)
-            const labelWidth = 105;
-            const labelHeight = 22;
+            console.log(slice)
             const labelPosY = (index * 18) - 28;
             return (
                 <G key={index}>
@@ -88,17 +75,21 @@ const PatternChart = ({ probabilities }) => {
     }
 
     return (
-        <PieChart
-            style={{ height: 100 }}
-            svg={{ translateX: 30 }}
-            valueAccessor={({ item }) => item.amount}
-            data={data}
-            innerRadius={10}
-            outerRadius={40}
-            labelRadius={100}
-        >
-            <Labels />
-        </PieChart>
+        <View style={{}}>
+            <PieChart
+                style={{ height: 120}}
+                svg={{}}
+                valueAccessor={({ item }) => item.amount}
+                data={data}
+                innerRadius={10}
+                outerRadius={40}
+                labelRadius={100}
+            >
+                <Title />
+                <Labels />
+            </PieChart>
+            {/* <Button title="Hello" /> */}
+        </View>
     )
 }
 
