@@ -121,7 +121,7 @@ const Home = ({ navigation, route }) => {
                             >
                                 <Picker.Item label="I don't know..." value={-1} />
                                 <Picker.Item label='Fluctuating' value={0} />
-                                <Picker.Item label='Large Spike' value={1} />
+                                <Picker.Item label='Big Spike' value={1} />
                                 <Picker.Item label='Decreasing' value={2} />
                                 <Picker.Item label='Small Spike' value={3} />
                             </Picker>
