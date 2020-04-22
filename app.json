@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "stalks-app",
-    "slug": "stalks-app",
+    "name": "Stalks",
+    "slug": "stalks",
     "platforms": [
       "ios",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -22,6 +22,9 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "privacy": "unlisted",
+    "description": "",
+    "githubUrl": "https://github.com/gabeklavans/stalks-app"
   }
 }
