@@ -8,5 +8,6 @@ export default {
         '#6494aa',
         '#bad4aa'
     ],
-    confirmButton: '#EA7460'
+    confirmButton: '#EA7460',
+    navButton: 'white'
 }

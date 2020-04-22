@@ -45,7 +45,7 @@ const Settings = ({ navigation, route }) => {
         let vals = prices.flat().map(string => parseInt(string));
 
         if (vals.every(val => isNaN(val)) && !firstBuy) {
-            console.log('No vals in here!')
+            // console.log('No vals in here!')
             setEmptyChart(true);
         } else {
             let possibilities = predict(vals, firstBuy, pattern);

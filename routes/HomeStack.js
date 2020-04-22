@@ -56,17 +56,17 @@ const navStyles = {
         }
     },
     home: ({navigation}) => ({
-        headerTitle: (<Image style={{ width: '100%', height: '100%' }} source={require('../assets/stalks-app-logo.png')} />),
+        headerTitle: (<Image style={{ width: 40, height: 40 }} source={require('../assets/stalks-app-logo.png')} />),
         headerLeft: () => (
-            <Button onPress={navigation.openDrawer} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: 'white' }} /></Button>
+            <Button onPress={navigation.openDrawer} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: Colors.navButton }} /></Button>
         ),
         headerRight: () => (
-            <Button onPress={homeInfoButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-information-circle-outline' style={{ fontSize: 30, color: 'white' }} /></Button>
+            <Button onPress={homeInfoButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-information-circle-outline' style={{ fontSize: 30, color: Colors.navButton }} /></Button>
         )
     }),
     predictions: {
         headerRight: () => (
-            <Button onPress={predictionsInfoButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-information-circle-outline' style={{ fontSize: 30, color: 'white' }} /></Button>
+            <Button onPress={predictionsInfoButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-information-circle-outline' style={{ fontSize: 30, color: Colors.navButton }} /></Button>
         )
     }
 }
