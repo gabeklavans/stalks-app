@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { Form, Item, Input } from 'native-base'
 
 import Days from '../assets/Days'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
-import { Grid, LineChart, XAxis, YAxis, Path } from 'react-native-svg-charts'
+import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import { G, Text, Circle } from 'react-native-svg'
 import LineShadow from './LineShadow';
 import Colors from '../assets/Colors';

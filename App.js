@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@use-expo/font';
 
@@ -26,6 +26,7 @@ export default function App() {
             let data = await AsyncStorage.getItem('priceData');
             data = JSON.parse(data)
 
+            // This big boi is definitely unecessarily big but I don't feel like thinking about arrays right now
             if (data) {
                 for (let i = 0; i < data.length; i++) {
                     if (data[i]) {

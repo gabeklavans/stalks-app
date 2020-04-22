@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect, useLayoutEffect } from 'react'
-import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions, SafeAreaView } from 'react-native'
-import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View, ListItem, CheckBox, Switch, Footer, FooterTab } from 'native-base';
+import React, { useState, useContext } from 'react'
+import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions } from 'react-native'
+import { Container, Button, Text, Content, Icon, Form, Item, Picker, Input, View, Switch, Footer, FooterTab } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import _ from "lodash";
@@ -16,6 +16,9 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
+    // Write through the data to storage everytime an input field changes
+    // Idk if this makes the app slower but it's the solution I've got for now
+    // TODO: Maybe limit this to only when user hits the Get Predictions button
     const saveDataToStorage = async data => {
         try {
             await AsyncStorage.setItem('priceData', JSON.stringify(data))

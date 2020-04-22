@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image, Dimensions, StatusBar } from 'react-native'
-import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body } from 'native-base';
+import { Image } from 'react-native'
+import { Button, Icon } from 'native-base';
 
 import Colors from '../assets/Colors'
 import { fonts } from '../assets/Fonts';

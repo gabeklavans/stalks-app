@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image, Dimensions, StatusBar, Alert } from 'react-native'
-import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body } from 'native-base';
+import { Image, Alert } from 'react-native'
+import { Button, Icon } from 'native-base';
 
 import Home from '../screens/Home'
 import Predictions from '../screens/Predictions'

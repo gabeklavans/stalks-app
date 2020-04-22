@@ -1,7 +1,7 @@
 import React from 'react'
 import { PieChart } from 'react-native-svg-charts'
 import { G, Text, Circle } from 'react-native-svg'
-import { Button, View } from 'react-native'
+import { } from 'react-native'
 import Colors from '../assets/Colors'
 
 const PatternChart = ({ probabilities }) => {

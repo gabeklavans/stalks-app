@@ -1,10 +1,9 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
-import { StyleSheet, View, Dimensions, SafeAreaView, Alert, Modal, InteractionManager, Image, ImageBackground } from 'react-native'
-import { Button, Container, Content, Text } from 'native-base';
+import React, { useState, useCallback } from 'react'
+import { StyleSheet, View, Dimensions, InteractionManager, Image } from 'react-native'
+import { Text } from 'native-base';
 import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { PriceContext, FirstBuyContext, PatternContext } from '../components/GlobalContext';
 import Loader from '../components/Loader'
 import predict from '../scripts/predictions'
 import { getPatternProbabilities } from '../scripts/getPatternProbabilities'
