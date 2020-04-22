@@ -16,12 +16,22 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
+    const saveDataToStorage = async data => {
+        try {
+            await AsyncStorage.setItem('priceData', JSON.stringify(data))
+        } catch (error) {
+            console.error('Failed to put data into storage')
+        }
+        
+    }
+
     // Deep copy the price data and insert this price in the approriate index for that time and day
     const setPriceHandler = (day, time, price) => {
         setPrices(oldPrices => {
             let newPrices = JSON.parse(JSON.stringify(oldPrices));
             // Sanatize inputs too, to only numbers
             newPrices[day][time] = price.replace(/[^0-9]/g, '');
+            saveDataToStorage(newPrices);
             return newPrices
         });
     }
@@ -70,7 +80,7 @@ const Home = ({ navigation, route }) => {
 
     // Handler for the get predictions button at the bottom of the screen
     const getPredictionsHandler = () => {
-        navigation.navigate('Predictions');
+        navigation.navigate('Predictions', {prices: prices, pattern: pattern, firstBuy: firstBuy});
     }
 
     return (

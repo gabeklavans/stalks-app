@@ -16,9 +16,7 @@ import { getMaxPrices } from '../scripts/getMaxPrices';
 
 
 const Settings = ({ navigation, route }) => {
-    const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
-    const [pattern, setPattern] = useContext(PatternContext);
-    const [prices, setPrices] = useContext(PriceContext);
+    const { prices, pattern, firstBuy } = route.params
 
     const [dayMin, setDayMin] = useState([50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]);
     const [dayMax, setDayMax] = useState([10, 23, 22, 100, -10, 0, 0, 0, 0, 0, -10, 0, 0, -3, -51]);
