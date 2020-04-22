@@ -16,14 +16,14 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
-    // Write through the data to storage everytime an input field changes
+    // Write through the prices to storage everytime an input field changes
     // Idk if this makes the app slower but it's the solution I've got for now
     // TODO: Maybe limit this to only when user hits the Get Predictions button
-    const saveDataToStorage = async data => {
+    const savePriceDataToStorage = async data => {
         try {
             await AsyncStorage.setItem('priceData', JSON.stringify(data))
         } catch (error) {
-            console.error('Failed to put data into storage')
+            console.error('Failed to put price data into storage')
         }
         
     }
@@ -34,9 +34,24 @@ const Home = ({ navigation, route }) => {
             let newPrices = JSON.parse(JSON.stringify(oldPrices));
             // Sanatize inputs too, to only numbers
             newPrices[day][time] = price.replace(/[^0-9]/g, '');
-            saveDataToStorage(newPrices);
+            savePriceDataToStorage(newPrices);
             return newPrices
         });
+    }
+
+    // Write through pattern data to storage
+    // Expects data to be an int
+    const savePatternDataToStorage = async data => {
+        try {
+            await AsyncStorage.setItem('lastPattern', data.toString())
+        } catch (error) {
+            console.error('Failed to put pattern data into storage')
+        }
+    }
+
+    const setPatternHandler = pattern => {
+        setPattern(pattern);
+        savePatternDataToStorage(pattern)
     }
 
     const firstTimeButtonHandler = () => {
@@ -115,7 +130,7 @@ const Home = ({ navigation, route }) => {
                                     mode='dialog'
                                     style={{ width: 150 }}
                                     selectedValue={pattern}
-                                    onValueChange={setPattern}
+                                    onValueChange={setPatternHandler}
                                     textStyle={{ color: '#007aff', ...styles.text }}
                                 >
                                     <Picker.Item label="I don't know..." value={-1} />

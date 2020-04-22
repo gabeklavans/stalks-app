@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@use-expo/font';
 
 import { PriceContext, FirstBuyContext, PatternContext } from './components/GlobalContext';
-import TabNavigator from './routes/TabNavigator'
 import DrawerNavigator from './routes/DrawerNavigator'
 import { AppLoading } from 'expo';
 
@@ -24,23 +23,17 @@ export default function App() {
     const retrieveInputsFromStorage = async () => {
         try {
             let data = await AsyncStorage.getItem('priceData');
-            data = JSON.parse(data)
 
-            // This big boi is definitely unecessarily big but I don't feel like thinking about arrays right now
             if (data) {
-                for (let i = 0; i < data.length; i++) {
-                    if (data[i]) {
-                        for (let j = 0; j < data[i].length; j++) {
-                            if (data[i][j]) {
-                                setPrices(oldPrices => {
-                                    let newPrices = JSON.parse(JSON.stringify(oldPrices));
-                                    newPrices[i][j] = data[i][j];
-                                    return newPrices;
-                                });
-                            }
-                        }
-                    }
-                }
+                data = JSON.parse(data)
+                setPrices(data)
+            }
+
+            // Expects last pattern to be string of an int
+            let lastPattern = await AsyncStorage.getItem('lastPattern')
+            
+            if (lastPattern) {
+                setPattern(parseInt(lastPattern))
             }
         } catch {
             console.error('Error retrieve data')
