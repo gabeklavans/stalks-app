@@ -37,13 +37,13 @@ const About = ({ navigation }) => {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.text}>{'\u2022'} </Text>
-                    <Text>All my friends that reminded me to be a human as I coded this app up in a frenzy 💗</Text>
+                    <Text style={styles.text}>All my friends and family that reminded me to be a human as I coded this app up in a frenzy 💗</Text>
                 </View>
 
 
                 <View style={{marginTop: 20}}>
                     <Anchor style={{...styles.text, fontSize: 20}} href='https://github.com/gabeklavans/stalks-app' >GitHub</Anchor>
-                    <Text>Have a feature request? Want to open an issue? Want to fix my spaghetti code (and maybe teach me some good coding practices)? Then check out the repository for this app!</Text>
+                    <Text style={styles.text}>Have a feature request? Want to open an issue? Want to fix my spaghetti code (and maybe teach me some good coding practices)? Then check out the repository for this app!</Text>
                 </View>
             </Content>
         </Container>

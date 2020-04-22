@@ -15,7 +15,8 @@ export default function App() {
     const [pattern, setPattern] = useState(-1);
 
     const [fontIsLoaded] = useFonts({
-        'Arial-Round': require('./assets/fonts/unicode.arialr.ttf')
+        'Arial-Round': require('./assets/fonts/unicode.arialr.ttf'),
+        'Arial-Round-Bold': require('./assets/fonts/arlrdbd.ttf')
     })
 
     if (!fontIsLoaded) {

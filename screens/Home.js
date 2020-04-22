@@ -45,7 +45,7 @@ const Home = ({ navigation, route }) => {
     } else {
         buyPriceField = (
             <Input
-                style={{ textAlign: 'center' }}
+                style={{...styles.text, textAlign: 'center'}}
                 placeholder='Buy Price'
                 placeholderTextColor='rgba(140, 114, 127, 0.6)'
                 keyboardType='number-pad'
@@ -79,7 +79,7 @@ const Home = ({ navigation, route }) => {
                     <KeyboardAvoidingView behavior='padding' style={styles.content}>
                         <Text style={styles.text}>Enter your turnip prices for the week!</Text>
                         <Form style={styles.form}>
-                            <Item rounded style={{ ...styles.input, ...styles.text }}>
+                            <Item rounded style={styles.input}>
                                 {buyPriceField}
                             </Item>
                         </Form>
@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
     input: {
         width: 140,
         height: '70%',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        fontFamily: fonts.main
     },
     text: {
         fontFamily: fonts.main

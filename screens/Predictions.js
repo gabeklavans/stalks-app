@@ -92,7 +92,8 @@ const Settings = ({ navigation, route }) => {
                         position: 'absolute',
                         bottom: 0,
                         resizeMode: 'stretch',
-                        height: Dimensions.get('screen').height * .25
+                        height: Dimensions.get('screen').height * .25,
+                        opacity: 0.5
                     }}
                 />
             </View>

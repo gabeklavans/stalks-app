@@ -1,3 +1,3 @@
 export const fonts = {
-    main: 'Arial-Round'
+    main: 'Arial-Round-Bold'
 }
