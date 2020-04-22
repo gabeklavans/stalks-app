@@ -1,5 +1,5 @@
 export default {
-    iconBackground: '#92B568',
+    iconBackground: '#91b765',
     splashBackground: '#FF7779',
     appBackground: '#FDFAE8',
     patternColors: [
