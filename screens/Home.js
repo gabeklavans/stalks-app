@@ -14,7 +14,6 @@ const Home = ({ navigation, route }) => {
     const [prices, setPrices] = useContext(PriceContext);
     const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
     const [pattern, setPattern] = useContext(PatternContext);
-    const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
     // Write through the prices to storage everytime an input field changes
     // Idk if this makes the app slower but it's the solution I've got for now
@@ -39,7 +38,7 @@ const Home = ({ navigation, route }) => {
         });
     }
 
-    // Write through pattern data to storage
+    // Write through last pattern data to storage
     // Expects data to be an int
     const savePatternDataToStorage = async data => {
         try {
@@ -54,9 +53,21 @@ const Home = ({ navigation, route }) => {
         savePatternDataToStorage(pattern)
     }
 
+    // Write through first buy bool to storage
+    // Expects data to be a boolean value
+    const saveFirstBuyToggleToStorage = async data => {
+        try {
+            await AsyncStorage.setItem('firstBuy', data.toString())
+        } catch (error) {
+            console.error('Failed to put first buy data into storage')
+        }
+    }
+
     const firstTimeButtonHandler = () => {
-        setFirstBuy(!firstBuy);
-        setFirstBuyToggle(!firstBuyToggle);
+        setFirstBuy(oldFirstBuy => {
+            saveFirstBuyToggleToStorage(!oldFirstBuy)
+            return !oldFirstBuy;
+        });
     }
 
     let buyPriceField;
@@ -119,7 +130,7 @@ const Home = ({ navigation, route }) => {
                         <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
                         <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
                             <Text style={styles.text}>First buy on your island?</Text>
-                            <Switch onValueChange={firstTimeButtonHandler} value={firstBuyToggle} />
+                            <Switch onValueChange={firstTimeButtonHandler} value={firstBuy} />
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={styles.text}>Last Pattern:</Text>

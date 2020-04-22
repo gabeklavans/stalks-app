@@ -24,7 +24,7 @@ export default HomeStack
 
 const homeInfoText = `Enter your prices for each time field.
 
-Toggle on the First Buy switch if this is the first time you're buying turnips on *your* island. It affects this week's pattern.
+Toggle on the First Buy switch if this is the first time you're buying turnips on *your* island. It affects this week's pattern and disables the initial value input (it is ignored on your first buy).
 
 Your last week's pattern also affects this week's pattern, but it's ok if you don't know what it was.`
 
