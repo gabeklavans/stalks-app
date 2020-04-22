@@ -3,24 +3,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Image, Dimensions, StatusBar } from 'react-native'
 import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body } from 'native-base';
 
-import Home from '../screens/Home'
-import Predictions from '../screens/Predictions'
-
 import Colors from '../assets/Colors'
 import { fonts } from '../assets/Fonts';
+import About from '../screens/About';
 
 const Stack = createStackNavigator();
 
-const HomeStack = ({ route }) => {
+const AboutStack = ({ route }) => {
     return (
         <Stack.Navigator initialRouteName='Home' screenOptions={navStyles.header}>
-            <Stack.Screen name="Home" component={Home} options={navStyles.home} />
-            <Stack.Screen name="Predictions" component={Predictions} />
+            <Stack.Screen name="About" component={About} options={navStyles.home} />
         </Stack.Navigator>
     )
 }
 
-export default HomeStack
+export default AboutStack
 
 const navStyles = {
     header: {

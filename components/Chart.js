@@ -3,8 +3,9 @@ import { StyleSheet, View, Dimensions } from 'react-native'
 import { Grid, LineChart, XAxis, YAxis, Path } from 'react-native-svg-charts'
 import { G, Text, Circle } from 'react-native-svg'
 import LineShadow from './LineShadow';
+import Colors from '../assets/Colors';
 
-const Chart = ({ data }) => {
+const Chart = ({ prices }) => {
 
     const axesSvg = { fontSize: 10, fill: 'black', };
     const verticalContentInset = { top: 30, bottom: 10 }
@@ -16,13 +17,14 @@ const Chart = ({ data }) => {
         return (
             <G>
                 <Text
-                    x={width/2}
+                    x={width/2 - 10}
                     y={5}
                     fill={'black'}
                     textAnchor={'middle'}
                     alignmentBaseline={'central'}
-                    fontSize={12} >
-                    Ttile
+                    fontSize={14}
+                    fontWeight='bold' >
+                    Potential Prices for the Week
                 </Text>
             </G>
 
@@ -32,7 +34,6 @@ const Chart = ({ data }) => {
     const Labels = ({ data, height }) => {
         return data.map((line, index) => {
             const strokeColor = line.svg.stroke;
-            // console.log(strokeColor)
             const labelPosY = 15;
             const labelPosX = index * 80;
             return (
@@ -61,10 +62,40 @@ const Chart = ({ data }) => {
         })
     }
 
+    const data = []
+
+    const labelMap = [
+        { label: 'Fluctuating', color: Colors.patternColors[0], strokeWidth: 5 },
+        { label: 'Big Spike', color: Colors.patternColors[1], strokeWidth: 4 },
+        { label: 'Decreasing', color: Colors.patternColors[2], strokeWidth: 3 },
+        { label: 'Small Spike', color: Colors.patternColors[3], strokeWidth: 2 },
+        { label: 'Guaranteed Minimum', color: 'black', strokeWidth: 1}
+    ]
+
+    for (let i = 0; i < prices.length; i++) {
+        if (prices[i]) {
+            data.push({
+                data: prices[i],
+                svg: { stroke: labelMap[i].color, strokeWidth: labelMap[i].strokeWidth },
+                label: labelMap[i].label
+            });
+        }
+    }
+
+    const flattenedData = [];
+
+    for (const pattern of data) {
+        // console.log(pattern.data)
+        for (const item of pattern.data) {
+            flattenedData.push(item)
+        }
+    }
+    // console.log(flattenedData)
+
     return (
-        <View style={{ height: Dimensions.get('screen').height * 0.4, padding: 20, flexDirection: 'row' }}>
+        <View style={{ height: Dimensions.get('screen').height * 0.48, padding: 20, flexDirection: 'row' }}>
             <YAxis
-                data={[...data[0].data, ...data[1].data]}
+                data={flattenedData}
                 style={{ marginBottom: xAxisHeight }}
                 contentInset={verticalContentInset}
                 svg={axesSvg}
@@ -76,10 +107,10 @@ const Chart = ({ data }) => {
                     svg={{ stroke: 'rgb(134, 65, 244)' }}
                     contentInset={verticalContentInset} >
                     <Grid />
-                    <LineShadow num={0} color='rgba(134, 65, 244, 0.2)' />
-                    <LineShadow num={1} color='rgba(134, 65, 244, 0.2)' />
+                    {/* <LineShadow num={0} color='rgba(134, 65, 244, 0.2)' />
+                    <LineShadow num={1} color='rgba(134, 65, 244, 0.2)' /> */}
                     <Title />
-                    <Labels />
+                    {/* <Labels /> */}
                 </LineChart>
                 <XAxis
                     style={{ marginHorizontal: -10, height: xAxisHeight }}

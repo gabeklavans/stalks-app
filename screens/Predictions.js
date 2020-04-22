@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react'
-import { StyleSheet, View, Dimensions, SafeAreaView, Alert, Modal, InteractionManager } from 'react-native'
+import { StyleSheet, View, Dimensions, SafeAreaView, Alert, Modal, InteractionManager, Image, ImageBackground } from 'react-native'
 import { Button, Container, Content, Text } from 'native-base';
 import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,6 +10,9 @@ import predict from '../scripts/predictions'
 import { getPatternProbabilities } from '../scripts/getPatternProbabilities'
 import Chart from '../components/Chart';
 import PatternChart from '../components/PatternChart';
+import Colors from '../assets/Colors';
+import { fonts } from '../assets/Fonts';
+import { getMaxPrices } from '../scripts/getMaxPrices';
 
 
 const Settings = ({ navigation, route }) => {
@@ -23,17 +26,9 @@ const Settings = ({ navigation, route }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [emptyChart, setEmptyChart] = useState(null);
+    const [priceLines, setPriceLines] = useState([]);
 
-    const data = [
-        {
-            data: dayMin,
-            svg: { stroke: 'purple', strokeWidth: 2 },
-        },
-        {
-            data: dayMax,
-            svg: { stroke: 'green', strokeWidth: 2 },
-        },
-    ]
+
 
     useFocusEffect(
         useCallback(() => {
@@ -53,13 +48,17 @@ const Settings = ({ navigation, route }) => {
             console.log('No vals in here!')
             setEmptyChart(true);
         } else {
-            let possibilities = predict(vals, firstBuy, pattern); 
+            let possibilities = predict(vals, firstBuy, pattern);
             setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
             setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
-            
+
             let catProbs = getPatternProbabilities(possibilities);
             setCategoryProbabilities(catProbs);
-            // console.log(catProbs)
+
+            let priceMaxes = getMaxPrices(possibilities);
+            priceMaxes.push(possibilities[0].prices.slice(1).map(day => day.min));
+            setPriceLines(priceMaxes)
+            // console.log(priceMaxes);
 
             setEmptyChart(false);
         }
@@ -74,22 +73,29 @@ const Settings = ({ navigation, route }) => {
     } else if (!emptyChart) {
         predictionContent = (
             <View>
-                <Chart data={data} />
+                <Chart prices={priceLines} />
                 <PatternChart probabilities={categroyProbabilities} />
             </View>
         )
     } else {
-        predictionContent = <Text>No data to display!</Text>
+        predictionContent = <Text style={styles.text}>No data to display!</Text>
     }
 
     return (
-        <View style={styles.screen} >
-            <Loader isLoading={isLoading} />
-            {/* <Button>
-                <Text>Get some predictions</Text>
-            </Button> */}
-            {predictionContent}
-        </View>
+            <View style={styles.screen}  >
+                <Loader isLoading={isLoading} />
+                {predictionContent}
+                <Image
+                    source={require('../assets/TurnipFooter.png')}
+                    style={{
+                        width: Dimensions.get('screen').width,
+                        position: 'absolute',
+                        bottom: 0,
+                        resizeMode: 'stretch',
+                        height: Dimensions.get('screen').height * .25
+                    }}
+                />
+            </View>
     );
 }
 
@@ -99,9 +105,18 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         padding: 5,
-        justifyContent: 'center',
-        backgroundColor: 'white'
-        // alignItems: 'center',
-        // backgroundColor: 'red'
+        justifyContent: 'flex-start',
+        alignContent: 'center',
+        backgroundColor: Colors.appBackground
+    },
+    text: {
+        fontFamily: fonts.main
+    },
+    bottom: {
+        width: Dimensions.get('screen').width,
+        height: 100,
+        borderWidth: 1,
+        position: 'absolute',
+        bottom: 0
     }
 })

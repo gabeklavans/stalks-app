@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { StyleSheet, Text, View, TextInput, FlatList, AsyncStorage, Alert, TouchableWithoutFeedback } from 'react-native'
-import { Container, Content, Button } from 'native-base'
+import { Container, Content, Button, Header } from 'native-base'
+import { fonts } from '../assets/Fonts';
+import Colors from '../assets/Colors';
 
-const History = ({route}) => {
+const History = ({ route }) => {
     const [priceData, setPriceData] = useState([]);
 
     const retrievePriceHistory = async () => {
@@ -43,18 +45,27 @@ const History = ({route}) => {
     // }
 
     return (
-        <View>
-            <Button onPress={retrievePriceHistory}>
+        <Container>
+            <Header style={{backgroundColor: Colors.iconBackground}}></Header>
+            {/* <Button onPress={retrievePriceHistory}>
                 <Text>Get data</Text>
             </Button>
                 <FlatList data={priceData} renderItem={itemData => (
                     <Text>{itemData.item.value}</Text>
-                )} />
+                )} /> */}
+            <Content style={{backgroundColor: Colors.appBackground, padding: 10}}>
+                <Text style={styles.text}>Nothing here yet!</Text>
+            </Content>
 
-        </View>
+
+        </Container>
     )
 }
 
 export default History
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    text: {
+        fontFamily: fonts.main
+    }
+})

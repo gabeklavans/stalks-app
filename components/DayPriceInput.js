@@ -3,13 +3,15 @@ import { StyleSheet, Text, View } from 'react-native'
 import { Form, Item, Input } from 'native-base'
 
 import Days from '../assets/Days'
+import Colors from '../assets/Colors'
+import { fonts } from '../assets/Fonts'
 
 const DayPriceInput = ({ handler, value, day }) => {
     return (
         <Form style={styles.container}>
             <Item rounded style={styles.input}>
                 <Input
-                    style={{ textAlign: 'center' }}
+                    style={styles.inputField}
                     placeholder='AM'
                     placeholderTextColor='rgba(140, 114, 127, 0.6)'
                     keyboardType='number-pad'
@@ -20,10 +22,10 @@ const DayPriceInput = ({ handler, value, day }) => {
                     value={value[day][0]}
                 />
             </Item>
-            <Text style={{width: '15%', textAlign: 'center'}} >{Days[day].short}</Text>
+            <Text style={{width: '15%', textAlign: 'center', ...styles.text}} >{Days[day].short}</Text>
             <Item rounded style={styles.input}>
                 <Input
-                    style={{ textAlign: 'center' }}
+                    style={styles.inputField}
                     placeholder='PM'
                     placeholderTextColor='rgba(140, 114, 127, 0.6)'
                     keyboardType='number-pad'
@@ -49,6 +51,14 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 90,
-        height: '70%'
+        height: '70%',
+        backgroundColor: 'white'
+    },
+    inputField: {
+        textAlign: 'center',
+        fontFamily: fonts.main
+    },
+    text: {
+        fontFamily: fonts.main
     }
 })

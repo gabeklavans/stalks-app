@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useLayoutEffect } from 'react'
-import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions } from 'react-native'
+import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions, SafeAreaView } from 'react-native'
 import { Container, Button, Text, Content, Header, Left, Icon, Right, Title, Body, Form, Item, Picker, Input, View, ListItem, CheckBox, Switch, Footer, FooterTab } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -8,6 +8,7 @@ import { PriceContext, FirstBuyContext, PatternContext } from '../components/Glo
 
 import DayPriceInput from '../components/DayPriceInput'
 import Colors from '../assets/Colors';
+import { fonts } from '../assets/Fonts';
 
 const Home = ({ navigation, route }) => {
     const [prices, setPrices] = useContext(PriceContext);
@@ -87,60 +88,58 @@ const Home = ({ navigation, route }) => {
     }
 
     return (
-        <Container>
-            <Content style={{ padding: '5%' }}>
-                <KeyboardAvoidingView behavior='padding' style={styles.content}>
-                    <Text>Enter your turnip prices for the week!</Text>
-                    {/* <DayPriceInput handler={setPriceHandler} value={prices} day={0} /> */}
-                    <Form style={styles.form}>
-                        <Item rounded style={styles.input}>
-                            {buyPriceField}
-                        </Item>
-                    </Form>
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
-                    <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
-                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Text>First buy on your island?</Text>
-                        <Switch onValueChange={firstTimeButtonHandler} value={firstBuyToggle} />
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text>Last Pattern:</Text>
-                        <Form>
-                            <Picker
-                                iosHeader="Pattern"
-                                iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-                                mode='dialog'
-                                style={{ width: 150 }}
-                                selectedValue={pattern}
-                                onValueChange={setPattern}
-                                textStyle={{ color: '#007aff' }}
-                            >
-                                <Picker.Item label="I don't know..." value={-1} />
-                                <Picker.Item label='Fluctuating' value={0} />
-                                <Picker.Item label='Big Spike' value={1} />
-                                <Picker.Item label='Decreasing' value={2} />
-                                <Picker.Item label='Small Spike' value={3} />
-                            </Picker>
+            <Container style={{ backgroundColor: Colors.appBackground }}>
+                <Content style={{ padding: '5%' }} >
+                    <KeyboardAvoidingView behavior='padding' style={styles.content}>
+                        <Text style={styles.text}>Enter your turnip prices for the week!</Text>
+                        <Form style={styles.form}>
+                            <Item rounded style={{ ...styles.input, ...styles.text }}>
+                                {buyPriceField}
+                            </Item>
                         </Form>
-                    </View>
-                </KeyboardAvoidingView>
-            </Content>
-
-            <Footer>
-                <FooterTab >
-                    <Button onPress={getPredictionsHandler} vertical full style={{ backgroundColor: 'blue' }}>
-                        {/* <Icon name='ios-trending-up' /> */}
-                        <Ionicons name='ios-trending-up' size={25} color='white' />
-                        <Text style={{ color: 'white', fontWeight: 'bold' }}>Get predictions!</Text>
-                    </Button>
-                </FooterTab>
-
-            </Footer>
-        </Container >
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
+                        <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
+                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
+                            <Text style={styles.text}>First buy on your island?</Text>
+                            <Switch onValueChange={firstTimeButtonHandler} value={firstBuyToggle} />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={styles.text}>Last Pattern:</Text>
+                            <Form>
+                                <Picker
+                                    iosHeader="Pattern"
+                                    iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+                                    mode='dialog'
+                                    style={{ width: 150 }}
+                                    selectedValue={pattern}
+                                    onValueChange={setPattern}
+                                    textStyle={{ color: '#007aff', ...styles.text }}
+                                >
+                                    <Picker.Item label="I don't know..." value={-1} />
+                                    <Picker.Item label='Fluctuating' value={0} />
+                                    <Picker.Item label='Big Spike' value={1} />
+                                    <Picker.Item label='Decreasing' value={2} />
+                                    <Picker.Item label='Small Spike' value={3} />
+                                </Picker>
+                            </Form>
+                        </View>
+                    </KeyboardAvoidingView>
+                </Content>
+    
+                <Footer>
+                    <FooterTab >
+                        <Button onPress={getPredictionsHandler} vertical full style={{ backgroundColor: Colors.confirmButton }}>
+                            <Ionicons name='ios-trending-up' size={25} color='white' />
+                            <Text style={{ color: 'white', fontWeight: 'bold', ...styles.text }}>Get predictions!</Text>
+                        </Button>
+                    </FooterTab>
+    
+                </Footer>
+            </Container >
     )
 }
 
@@ -163,6 +162,10 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 140,
-        height: '70%'
+        height: '70%',
+        backgroundColor: 'white'
+    },
+    text: {
+        fontFamily: fonts.main
     }
 })

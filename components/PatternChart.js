@@ -2,6 +2,7 @@ import React from 'react'
 import { PieChart } from 'react-native-svg-charts'
 import { G, Text, Circle } from 'react-native-svg'
 import { Button, View } from 'react-native'
+import Colors from '../assets/Colors'
 
 const PatternChart = ({ probabilities }) => {
 
@@ -10,12 +11,13 @@ const PatternChart = ({ probabilities }) => {
             <G>
                 <Text
                     x={0}
-                    y={-50}
+                    y={-54}
                     fill={'black'}
                     textAnchor={'middle'}
                     alignmentBaseline={'central'}
-                    fontSize={12} >
-                    Ttile
+                    fontSize={14}
+                    fontWeight='bold' >
+                    Chance of Each Pattern
                 </Text>
             </G>
 
@@ -23,10 +25,10 @@ const PatternChart = ({ probabilities }) => {
     }
 
     const labelMap = [
-        { label: 'Fluctuating', color: 'yellow' },
-        { label: 'Big Spike', color: 'red' },
-        { label: 'Decreasing', color: 'blue' },
-        { label: 'Small Spike', color: 'green' }
+        { label: 'Fluctuating', color: Colors.patternColors[0] },
+        { label: 'Big Spike', color: Colors.patternColors[1] },
+        { label: 'Decreasing', color: Colors.patternColors[2] },
+        { label: 'Small Spike', color: Colors.patternColors[3] }
     ]
 
     const data = []
@@ -45,13 +47,27 @@ const PatternChart = ({ probabilities }) => {
     const Labels = ({ slices }) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
-            console.log(slice)
-            const labelPosY = (index * 18) - 28;
+            // console.log(slice)
+
+            let labelPosX;
+            let labelPosY;
+
+            let circlePosX;
+            if (index > 1 ) {
+                labelPosY = ((index -2) * -36) + 18;
+                labelPosX = -165;
+                circlePosX = -50;
+            } else {
+                labelPosY = ((index ) * 36) - 18;
+                labelPosX = 62;
+                circlePosX = 50;
+            }
+
             return (
                 <G key={index}>
                     <Circle
                         key={index + (Math.pow(10, 2))}
-                        cx={55}
+                        cx={circlePosX}
                         cy={labelPosY}
                         r={5}
                         fill={data.svg.fill}
@@ -59,7 +75,7 @@ const PatternChart = ({ probabilities }) => {
                         strokeWidth={1} />
                     <Text
                         key={index}
-                        x={65}
+                        x={labelPosX}
                         y={labelPosY}
                         fill={'black'}
                         textAnchor={'start'}
@@ -75,21 +91,18 @@ const PatternChart = ({ probabilities }) => {
     }
 
     return (
-        <View style={{}}>
-            <PieChart
-                style={{ height: 120}}
-                svg={{}}
-                valueAccessor={({ item }) => item.amount}
-                data={data}
-                innerRadius={10}
-                outerRadius={40}
-                labelRadius={100}
-            >
-                <Title />
-                <Labels />
-            </PieChart>
-            {/* <Button title="Hello" /> */}
-        </View>
+        <PieChart
+            style={{ height: 120 }}
+            svg={{}}
+            valueAccessor={({ item }) => item.amount}
+            data={data}
+            innerRadius={10}
+            outerRadius={40}
+            labelRadius={100}
+        >
+            <Title />
+            <Labels />
+        </PieChart>
     )
 }
 

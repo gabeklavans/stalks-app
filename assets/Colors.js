@@ -1,4 +1,12 @@
 export default {
     iconBackground: '#92B568',
-    splashBackground: '#FF7779'
+    splashBackground: '#FF7779',
+    appBackground: '#FDFAE8',
+    patternColors: [
+        '#e9b872',
+        '#f06449',
+        '#6494aa',
+        '#bad4aa'
+    ],
+    confirmButton: '#EA7460'
 }
