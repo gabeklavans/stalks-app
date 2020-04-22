@@ -6,23 +6,6 @@ import Colors from '../assets/Colors'
 
 const About = ({ navigation }) => {
 
-    // Handler for the menu button
-    const menuButtonHandler = () => {
-        navigation.openDrawer();
-    }
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <Button onPress={menuButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: 'white' }} /></Button>
-            ),
-            headerStyle: {
-                height: Dimensions.get('screen').height * 0.12,
-                backgroundColor: Colors.iconBackground
-            }
-        });
-    }, [navigation]);
-
     return (
         <Container>
             <Content contentContainerStyle={styles.content}>

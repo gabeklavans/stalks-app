@@ -16,20 +16,6 @@ const Home = ({ navigation, route }) => {
     const [pattern, setPattern] = useContext(PatternContext);
     const [firstBuyToggle, setFirstBuyToggle] = useState(false);
 
-    // Handler for the menu button
-    const menuButtonHandler = () => {
-        navigation.openDrawer();
-    }
-
-    // Set up the drawer menu button
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <Button onPress={menuButtonHandler} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: 'white' }} /></Button>
-            ),
-        });
-    }, [navigation]);
-
     // Deep copy the price data and insert this price in the approriate index for that time and day
     const setPriceHandler = (day, time, price) => {
         setPrices(oldPrices => {
@@ -89,7 +75,7 @@ const Home = ({ navigation, route }) => {
 
     return (
             <Container style={{ backgroundColor: Colors.appBackground }}>
-                <Content style={{ padding: '5%' }} >
+                <Content scrollEnabled={false} contentContainerStyle={{ padding: '5%' }} >
                     <KeyboardAvoidingView behavior='padding' style={styles.content}>
                         <Text style={styles.text}>Enter your turnip prices for the week!</Text>
                         <Form style={styles.form}>

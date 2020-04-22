@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 const AboutStack = ({ route }) => {
     return (
         <Stack.Navigator initialRouteName='Home' screenOptions={navStyles.header}>
-            <Stack.Screen name="About" component={About} options={navStyles.home} />
+            <Stack.Screen name="About" component={About} options={navStyles.about} />
         </Stack.Navigator>
     )
 }
@@ -30,8 +30,11 @@ const navStyles = {
             fontFamily: fonts.main
         }
     },
-    home: ({height}) => ({
-        headerTitle: (<Image style={{ width: 40, height: 40 }} source={require('../assets/stalks-app-logo.png')}/>)
+    about: ({ navigation }) => ({
+        headerTitle: (<Image style={{ width: 40, height: 40 }} source={require('../assets/stalks-app-logo.png')} />),
+        headerLeft: () => (
+            <Button onPress={navigation.openDrawer} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: 'white' }} /></Button>
+        )
     })
-        
+
 }
