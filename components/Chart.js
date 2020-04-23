@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import { G, Text, Circle } from 'react-native-svg'
 import LineShadow from './LineShadow';
 import Colors from '../assets/Colors';
 
-const Chart = ({ prices }) => {
+const Chart = ({ maxLines, minLines, showMinLines }) => {
 
     const axesSvg = { fontSize: 10, fill: 'black', };
     const verticalContentInset = { top: 30, bottom: 10 }
@@ -15,9 +15,9 @@ const Chart = ({ prices }) => {
 
     const Title = ({ width }) => {
         return (
-            <G>
+            <G >
                 <Text
-                    x={width/2 - 10}
+                    x={width / 2 - 10}
                     y={5}
                     fill={'black'}
                     textAnchor={'middle'}
@@ -31,13 +31,14 @@ const Chart = ({ prices }) => {
         )
     }
 
-    const Labels = ({ data, height }) => {
-        return data.map((line, index) => {
-            const strokeColor = line.svg.stroke;
-            const labelPosY = 15;
-            const labelPosX = index * 80;
+    const Labels = ({ data }) => {
+        console.log(data)
+        // return data.map((line, index) => {
+            // const strokeColor = line.svg.stroke;
+            // const labelPosY = 15;
+            // const labelPosX = index * 80;
             return (
-                <G key={index}>
+                <G key={index} >
                     {/* <Circle
                         key={index + (Math.pow(10, 2))}
                         cx={55}
@@ -46,7 +47,7 @@ const Chart = ({ prices }) => {
                         fill={data.svg.fill}
                         stroke='black'
                         strokeWidth={1} /> */}
-                    <Text
+                    {/* <Text
                         key={index}
                         x={labelPosX}
                         y={labelPosY}
@@ -55,11 +56,10 @@ const Chart = ({ prices }) => {
                         alignmentBaseline={'central'}
                         fontSize={12} >
                         {strokeColor}
-                    </Text>
+                    </Text> */}
                 </G>
-
             )
-        })
+        // })
     }
 
     const data = []
@@ -69,16 +69,27 @@ const Chart = ({ prices }) => {
         { label: 'Big Spike', color: Colors.patternColors[1], strokeWidth: 4 },
         { label: 'Decreasing', color: Colors.patternColors[2], strokeWidth: 3 },
         { label: 'Small Spike', color: Colors.patternColors[3], strokeWidth: 2 },
-        { label: 'Guaranteed Minimum', color: 'black', strokeWidth: 1}
+        { label: 'Fluc. Min', color: Colors.patternColors[0], strokeWidth: 5 },
+        { label: 'B. Sp. Min', color: Colors.patternColors[1], strokeWidth: 4 },
+        { label: 'Dec. Min', color: Colors.patternColors[2], strokeWidth: 3 },
+        { label: 'S. Sp. Min', color: Colors.patternColors[3], strokeWidth: 2 },
+        { label: 'Guaranteed Minimum', color: 'black', strokeWidth: 1 }
     ]
 
-    for (let i = 0; i < prices.length; i++) {
-        if (prices[i]) {
+    for (let i = 0; i < maxLines.length; i++) {
+        if (maxLines[i]) {
             data.push({
-                data: prices[i],
+                data: maxLines[i],
                 svg: { stroke: labelMap[i].color, strokeWidth: labelMap[i].strokeWidth },
                 label: labelMap[i].label
             });
+            if (showMinLines) {
+                data.push({
+                    data: minLines[i],
+                    svg: { stroke: labelMap[i + 4].color, strokeWidth: labelMap[i + 4].strokeWidth },
+                    label: labelMap[i + 4].label
+                });
+            }
         }
     }
 
@@ -93,7 +104,7 @@ const Chart = ({ prices }) => {
     // console.log(flattenedData)
 
     return (
-        <View style={{ height: Dimensions.get('screen').height * 0.48, padding: 20, flexDirection: 'row' }}>
+        <View style={{ height: Dimensions.get('screen').height * 0.45, padding: 10, flexDirection: 'row' }}>
             <YAxis
                 data={flattenedData}
                 style={{ marginBottom: xAxisHeight }}
@@ -119,12 +130,9 @@ const Chart = ({ prices }) => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{
                         ...axesSvg,
-                        // fontSize: 8,
-                        // rotation: 10,
                         y: 3,
-                        // stroke: 'blue'
                     }}
-                />
+                 />
             </View>
         </View>
     )

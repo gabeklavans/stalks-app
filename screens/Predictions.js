@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { StyleSheet, View, Dimensions, InteractionManager, Image } from 'react-native'
-import { Text } from 'native-base';
+import { Text, Switch } from 'native-base';
 import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -11,21 +11,18 @@ import Chart from '../components/Chart';
 import PatternChart from '../components/PatternChart';
 import Colors from '../assets/Colors';
 import { fonts } from '../assets/Fonts';
-import { getMaxPrices } from '../scripts/getMaxPrices';
+import { getMinMaxPrices } from '../scripts/getMaxPrices';
 
 
 const Settings = ({ navigation, route }) => {
     const { prices, pattern, firstBuy } = route.params
 
-    const [dayMin, setDayMin] = useState([50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]);
-    const [dayMax, setDayMax] = useState([10, 23, 22, 100, -10, 0, 0, 0, 0, 0, -10, 0, 0, -3, -51]);
     const [categroyProbabilities, setCategoryProbabilities] = useState([])
 
     const [isLoading, setIsLoading] = useState(true);
     const [emptyChart, setEmptyChart] = useState(null);
     const [priceLines, setPriceLines] = useState([]);
-
-
+    const [showMinLines, setShowMinLines] = useState(true);
 
     useFocusEffect(
         useCallback(() => {
@@ -46,15 +43,13 @@ const Settings = ({ navigation, route }) => {
             setEmptyChart(true);
         } else {
             let possibilities = predict(vals, firstBuy, pattern);
-            setDayMin(possibilities[0].prices.slice(1).map(day => day.min));
-            setDayMax(possibilities[0].prices.slice(1).map(day => day.max));
 
             let catProbs = getPatternProbabilities(possibilities);
             setCategoryProbabilities(catProbs);
 
-            let priceMaxes = getMaxPrices(possibilities);
-            priceMaxes.push(possibilities[0].prices.slice(1).map(day => day.min));
-            setPriceLines(priceMaxes)
+            let [priceMins, priceMaxes] = getMinMaxPrices(possibilities);
+            // priceMaxes.push(possibilities[0].prices.slice(1).map(day => day.min));
+            setPriceLines([priceMins, priceMaxes])
             // console.log(priceMaxes);
 
             setEmptyChart(false);
@@ -70,7 +65,11 @@ const Settings = ({ navigation, route }) => {
     } else if (!emptyChart) {
         predictionContent = (
             <View>
-                <Chart prices={priceLines} />
+                <View style={{width: '60%', flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center', marginTop: 10, marginBottom: 5}}>
+                    <Text style={{...styles.text, fontSize: 14}}>Show Minimum Prices</Text>
+                    <Switch onValueChange={setShowMinLines} value={showMinLines} />
+                </View>
+                <Chart maxLines={priceLines[1]} minLines={priceLines[0]} showMinLines={showMinLines} />
                 <PatternChart probabilities={categroyProbabilities} />
             </View>
         )
