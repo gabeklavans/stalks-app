@@ -1,10 +1,9 @@
 {
   "expo": {
-    "name": "Stalks",
+    "name": "Stalks.",
     "slug": "stalks",
     "platforms": [
-      "ios",
-      "web"
+      "ios"
     ],
     "version": "0.1.0",
     "orientation": "portrait",
@@ -21,10 +20,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "coding.5ugar33.stalks",
+      "buildNumber": "0.1.0"
     },
     "privacy": "unlisted",
-    "description": "",
-    "githubUrl": "https://github.com/gabeklavans/stalks-app"
+    "description": "A turnip price predicting app for Animal Crossing: New Horizons",
+    "githubUrl": "https://github.com/gabeklavans/stalks-app",
+    "primaryColor": "#91b765"
   }
 }
