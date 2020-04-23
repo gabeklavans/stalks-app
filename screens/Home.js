@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions } from 'react-native'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
+import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions, InteractionManager } from 'react-native'
 import { Container, Button, Text, Content, Icon, Form, Item, Picker, Input, View, Switch, Footer, FooterTab } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -9,11 +9,32 @@ import { PriceContext, FirstBuyContext, PatternContext } from '../components/Glo
 import DayPriceInput from '../components/DayPriceInput'
 import Colors from '../assets/Colors';
 import { fonts } from '../assets/Fonts';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Home = ({ navigation, route }) => {
     const [prices, setPrices] = useContext(PriceContext);
     const [firstBuy, setFirstBuy] = useContext(FirstBuyContext);
     const [pattern, setPattern] = useContext(PatternContext);
+
+    const firstBootChecker = async () => {
+        let firstBoot = await AsyncStorage.getItem('firstBoot')
+
+        if (firstBoot == undefined) {
+            Alert.alert('Welcome!', 'Your inputs will be saved, even after you close the app (but not if you delete the app!) \n Press the info buttons in the top right for more info on the current screen.', [{text: 'Thanks! 😊'}]);
+            await AsyncStorage.setItem('firstBoot', 'The location of my burried treasure is')
+        }
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            const task = InteractionManager.runAfterInteractions(() => {
+                firstBootChecker();
+            });
+
+            return () => task.cancel();
+
+        })
+    )
 
     // Write through the prices to storage everytime an input field changes
     // Idk if this makes the app slower but it's the solution I've got for now
@@ -24,7 +45,7 @@ const Home = ({ navigation, route }) => {
         } catch (error) {
             console.error('Failed to put price data into storage')
         }
-        
+
     }
 
     // Deep copy the price data and insert this price in the approriate index for that time and day
@@ -84,7 +105,7 @@ const Home = ({ navigation, route }) => {
     } else {
         buyPriceField = (
             <Input
-                style={{...styles.text, textAlign: 'center'}}
+                style={{ ...styles.text, textAlign: 'center' }}
                 placeholder='Buy Price'
                 placeholderTextColor='rgba(140, 114, 127, 0.6)'
                 keyboardType='number-pad'
@@ -109,62 +130,62 @@ const Home = ({ navigation, route }) => {
 
     // Handler for the get predictions button at the bottom of the screen
     const getPredictionsHandler = () => {
-        navigation.navigate('Predictions', {prices: prices, pattern: pattern, firstBuy: firstBuy});
+        navigation.navigate('Predictions', { prices: prices, pattern: pattern, firstBuy: firstBuy });
     }
 
     return (
-            <Container style={{ backgroundColor: Colors.appBackground }}>
-                <Content scrollEnabled={false} contentContainerStyle={{ padding: '5%' }} >
-                    <KeyboardAvoidingView behavior='padding' style={styles.content}>
-                        <Text style={styles.text}>Enter your turnip prices for the week!</Text>
-                        <Form style={styles.form}>
-                            <Item rounded style={styles.input}>
-                                {buyPriceField}
-                            </Item>
+        <Container style={{ backgroundColor: Colors.appBackground }}>
+            <Content scrollEnabled={false} contentContainerStyle={{ padding: '5%' }} >
+                <KeyboardAvoidingView behavior='padding' style={styles.content}>
+                    <Text style={styles.text}>Enter your turnip prices for the week!</Text>
+                    <Form style={styles.form}>
+                        <Item rounded style={styles.input}>
+                            {buyPriceField}
+                        </Item>
+                    </Form>
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
+                    <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
+                        <Text style={styles.text}>First buy on your island?</Text>
+                        <Switch onValueChange={firstTimeButtonHandler} value={firstBuy} />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.text}>Last Pattern:</Text>
+                        <Form>
+                            <Picker
+                                iosHeader="Pattern"
+                                iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
+                                mode='dialog'
+                                style={{ width: 150 }}
+                                selectedValue={pattern}
+                                onValueChange={setPatternHandler}
+                                textStyle={{ color: '#007aff', ...styles.text }}
+                            >
+                                <Picker.Item label="I don't know..." value={-1} />
+                                <Picker.Item label='Fluctuating' value={0} />
+                                <Picker.Item label='Big Spike' value={1} />
+                                <Picker.Item label='Decreasing' value={2} />
+                                <Picker.Item label='Small Spike' value={3} />
+                            </Picker>
                         </Form>
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={1} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={2} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={3} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={4} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={5} />
-                        <DayPriceInput handler={setPriceHandler} value={prices} day={6} />
-                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                            <Text style={styles.text}>First buy on your island?</Text>
-                            <Switch onValueChange={firstTimeButtonHandler} value={firstBuy} />
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={styles.text}>Last Pattern:</Text>
-                            <Form>
-                                <Picker
-                                    iosHeader="Pattern"
-                                    iosIcon={<Icon name="arrow-dropdown-circle" style={{ color: "#007aff", fontSize: 25 }} />}
-                                    mode='dialog'
-                                    style={{ width: 150 }}
-                                    selectedValue={pattern}
-                                    onValueChange={setPatternHandler}
-                                    textStyle={{ color: '#007aff', ...styles.text }}
-                                >
-                                    <Picker.Item label="I don't know..." value={-1} />
-                                    <Picker.Item label='Fluctuating' value={0} />
-                                    <Picker.Item label='Big Spike' value={1} />
-                                    <Picker.Item label='Decreasing' value={2} />
-                                    <Picker.Item label='Small Spike' value={3} />
-                                </Picker>
-                            </Form>
-                        </View>
-                    </KeyboardAvoidingView>
-                </Content>
-    
-                <Footer>
-                    <FooterTab >
-                        <Button onPress={getPredictionsHandler} vertical full style={{ backgroundColor: Colors.confirmButton }}>
-                            <Ionicons name='ios-trending-up' size={25} color='white' />
-                            <Text style={{ color: 'white', fontWeight: 'bold', ...styles.text }}>Get predictions!</Text>
-                        </Button>
-                    </FooterTab>
-    
-                </Footer>
-            </Container >
+                    </View>
+                </KeyboardAvoidingView>
+            </Content>
+
+            <Footer>
+                <FooterTab >
+                    <Button onPress={getPredictionsHandler} vertical full style={{ backgroundColor: Colors.confirmButton }}>
+                        <Ionicons name='ios-trending-up' size={25} color='white' />
+                        <Text style={{ color: 'white', fontWeight: 'bold', ...styles.text }}>Get predictions!</Text>
+                    </Button>
+                </FooterTab>
+
+            </Footer>
+        </Container >
     )
 }
 
