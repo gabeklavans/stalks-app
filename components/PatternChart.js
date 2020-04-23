@@ -55,7 +55,7 @@ const PatternChart = ({ probabilities }) => {
             let circlePosX;
             if (index > 1 ) {
                 labelPosY = ((index -2) * -36) + 18;
-                labelPosX = -165;
+                labelPosX = -170;
                 circlePosX = -50;
             } else {
                 labelPosY = ((index ) * 36) - 18;
