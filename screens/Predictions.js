@@ -64,7 +64,7 @@ const Settings = ({ navigation, route }) => {
     } else if (!emptyChart) {
         predictionContent = (
             <View>
-                <View style={{width: '60%', flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center', marginTop: 10, marginBottom: 5}}>
+                <View style={{width: '80%', flexDirection: 'row', justifyContent: 'space-around', alignSelf: 'center', marginTop: 10, marginBottom: 5}}>
                     <Text style={{...styles.text, fontSize: 14}}>Show Minimum Prices</Text>
                     <Switch onValueChange={setShowMinLines} value={showMinLines} />
                 </View>
