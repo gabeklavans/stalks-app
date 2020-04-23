@@ -1,9 +1,8 @@
-import React, { useLayoutEffect } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import { Container, Content, Header, Icon, Button, Footer } from 'native-base'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { Container, Content } from 'native-base'
 import { fonts } from '../assets/Fonts'
 import Colors from '../assets/Colors'
-import { Linking } from 'expo'
 import Anchor from '../components/Anchor'
 
 const About = ({ navigation }) => {

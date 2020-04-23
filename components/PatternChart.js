@@ -47,7 +47,6 @@ const PatternChart = ({ probabilities }) => {
     const Labels = ({ slices }) => {
         return slices.map((slice, index) => {
             const { labelCentroid, pieCentroid, data } = slice;
-            // console.log(slice)
 
             let labelPosX;
             let labelPosY;

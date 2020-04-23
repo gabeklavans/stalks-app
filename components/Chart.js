@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
-import { G, Text, Circle } from 'react-native-svg'
-import LineShadow from './LineShadow';
+import { G, Text } from 'react-native-svg'
 import Colors from '../assets/Colors';
 
 const Chart = ({ maxLines, minLines, showMinLines }) => {
@@ -31,36 +30,36 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
         )
     }
 
-    const Labels = ({ data }) => {
-        console.log(data)
-        // return data.map((line, index) => {
-            // const strokeColor = line.svg.stroke;
-            // const labelPosY = 15;
-            // const labelPosX = index * 80;
-            return (
-                <G key={index} >
-                    {/* <Circle
-                        key={index + (Math.pow(10, 2))}
-                        cx={55}
-                        cy={labelPosY}
-                        r={5}
-                        fill={data.svg.fill}
-                        stroke='black'
-                        strokeWidth={1} /> */}
-                    {/* <Text
-                        key={index}
-                        x={labelPosX}
-                        y={labelPosY}
-                        fill={'black'}
-                        textAnchor={'start'}
-                        alignmentBaseline={'central'}
-                        fontSize={12} >
-                        {strokeColor}
-                    </Text> */}
-                </G>
-            )
-        // })
-    }
+    // const Labels = ({ data }) => {
+    //     console.log(data)
+    //     // return data.map((line, index) => {
+    //         // const strokeColor = line.svg.stroke;
+    //         // const labelPosY = 15;
+    //         // const labelPosX = index * 80;
+    //         return (
+    //             <G key={index} >
+    //                 <Circle
+    //                     key={index + (Math.pow(10, 2))}
+    //                     cx={55}
+    //                     cy={labelPosY}
+    //                     r={5}
+    //                     fill={data.svg.fill}
+    //                     stroke='black'
+    //                     strokeWidth={1} />
+    //                 <Text
+    //                     key={index}
+    //                     x={labelPosX}
+    //                     y={labelPosY}
+    //                     fill={'black'}
+    //                     textAnchor={'start'}
+    //                     alignmentBaseline={'central'}
+    //                     fontSize={12} >
+    //                     {strokeColor}
+    //                 </Text>
+    //             </G>
+    //         )
+    //     // })
+    // }
 
     const data = []
 
@@ -96,12 +95,10 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
     const flattenedData = [];
 
     for (const pattern of data) {
-        // console.log(pattern.data)
         for (const item of pattern.data) {
             flattenedData.push(item)
         }
     }
-    // console.log(flattenedData)
 
     return (
         <View style={{ height: Dimensions.get('screen').height * 0.45, padding: 10, flexDirection: 'row' }}>
@@ -118,8 +115,6 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
                     svg={{ stroke: 'rgb(134, 65, 244)' }}
                     contentInset={verticalContentInset} >
                     <Grid />
-                    {/* <LineShadow num={0} color='rgba(134, 65, 244, 0.2)' />
-                    <LineShadow num={1} color='rgba(134, 65, 244, 0.2)' /> */}
                     <Title />
                     {/* <Labels /> */}
                 </LineChart>

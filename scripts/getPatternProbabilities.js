@@ -3,7 +3,6 @@ export const getPatternProbabilities = analyzed_possibilities  => {
     let lastPattern;
     for (let poss of analyzed_possibilities) {
         if ((poss.pattern_number !== lastPattern) && poss.pattern_number < 4) {
-            // console.log(poss.pattern_number)
             lastPattern = poss.pattern_number;
             categoryProabilities[poss.pattern_number] = poss.category_total_probability;
         }

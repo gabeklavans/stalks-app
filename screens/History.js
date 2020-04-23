@@ -1,3 +1,5 @@
+/* WIP File, probably has really old and bad methods of doing things */
+
 import React, { useRef, useState } from 'react'
 import { StyleSheet, Text, View, TextInput, FlatList, AsyncStorage, Alert, TouchableWithoutFeedback } from 'react-native'
 import { Container, Content, Button, Header } from 'native-base'

@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image } from 'react-native'
 import { Button, Icon } from 'native-base';
 
 import Colors from '../assets/Colors'
@@ -31,7 +30,7 @@ const navStyles = {
         }
     },
     about: ({ navigation }) => ({
-        headerTitle: (<Image style={{ width: 40, height: 40 }} source={require('../assets/stalks-app-logo.png')} />),
+        title: 'About',
         headerLeft: () => (
             <Button onPress={navigation.openDrawer} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: Colors.navButton }} /></Button>
         )

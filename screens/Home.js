@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useContext, useCallback } from 'react'
 import { StyleSheet, AsyncStorage, Alert, KeyboardAvoidingView, Dimensions, InteractionManager } from 'react-native'
 import { Container, Button, Text, Content, Icon, Form, Item, Picker, Input, View, Switch, Footer, FooterTab } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';

@@ -28,8 +28,6 @@ const App = () => {
             //     'firstBuy'
             // ])
 
-            // console.log(data)
-
             let data = await AsyncStorage.getItem('priceData');
 
             if (data) {
@@ -67,8 +65,6 @@ const App = () => {
             retrieveInputsFromStorage();
         }
     }, [dataIsLoaded])
-
-
 
     if (!fontIsLoaded || !dataIsLoaded) {
         return <AppLoading />;

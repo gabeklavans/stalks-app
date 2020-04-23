@@ -817,7 +817,6 @@ function* generate_possibilities(sell_prices, first_buy, previous_pattern) {
 
 export default function analyze_possibilities(sell_prices, first_buy, previous_pattern) {
   const generated_possibilities = Array.from(generate_possibilities(sell_prices, first_buy, previous_pattern));
-  // console.log(generated_possibilities);
 
   const total_probability = generated_possibilities.reduce((acc, it) => acc + it.probability, 0);
   for (const it of generated_possibilities) {
@@ -889,7 +888,4 @@ export default function analyze_possibilities(sell_prices, first_buy, previous_p
 
   // console.log(generated_possibilities);
   return generated_possibilities;
-//   return new Promise(resolve => {
-//       resolve(generated_possibilities);
-//   });
 }

@@ -50,7 +50,6 @@ const Settings = ({ navigation, route }) => {
             let [priceMins, priceMaxes] = getMinMaxPrices(possibilities);
             // priceMaxes.push(possibilities[0].prices.slice(1).map(day => day.min));
             setPriceLines([priceMins, priceMaxes])
-            // console.log(priceMaxes);
 
             setEmptyChart(false);
         }
