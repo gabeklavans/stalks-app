@@ -81,14 +81,16 @@ const Settings = ({ navigation, route }) => {
                 <Loader isLoading={isLoading} />
                 {predictionContent}
                 <Image
-                    source={require('../assets/TurnipFooter.png')}
+                    source={require('../assets/TurnipFooter2.png')}
                     style={{
                         width: Dimensions.get('screen').width,
                         position: 'absolute',
-                        bottom: Dimensions.get('screen').height * -0.08,
-                        resizeMode: 'cover',
-                        height: Dimensions.get('screen').width * (Dimensions.get('screen').width / Dimensions.get('screen').height),
-                        opacity: 0.5
+                        // bottom: Dimensions.get('screen').height * -0.08,
+                        bottom: 0,
+                        resizeMode: 'contain',
+                        height: Dimensions.get('screen').height * .1,
+                        // height: 100,
+                        opacity: 1,
                     }}
                 />
             </View>
