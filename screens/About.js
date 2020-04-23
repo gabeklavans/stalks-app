@@ -44,6 +44,8 @@ const About = ({ navigation }) => {
                     <Anchor style={{...styles.text, fontSize: 20}} href='https://github.com/gabeklavans/stalks-app' >GitHub</Anchor>
                     <Text style={styles.text}>Have a feature request? Want to open an issue? Want to fix my spaghetti code (and maybe teach me some good coding practices)? Then check out the repository for this app!</Text>
                 </View>
+
+                <Text style={{...styles.text, opacity: 0.6, marginTop: 40}} >Version: 0.2.2</Text>
             </Content>
         </Container>
     )
