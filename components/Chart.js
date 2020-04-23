@@ -114,7 +114,7 @@ const Chart = ({ prices }) => {
                 </LineChart>
                 <XAxis
                     style={{ marginHorizontal: -10, height: xAxisHeight }}
-                    data={data[1].data}
+                    data={new Array(13).fill(0)}
                     formatLabel={(value, index) => xAxis[index]} //+ (index % 2 === 0 ? index === 0 ? '' : '🌑' : '☀️')}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{
