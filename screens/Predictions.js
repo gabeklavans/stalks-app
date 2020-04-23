@@ -86,9 +86,9 @@ const Settings = ({ navigation, route }) => {
                     style={{
                         width: Dimensions.get('screen').width,
                         position: 'absolute',
-                        bottom: 0,
-                        resizeMode: 'stretch',
-                        height: Dimensions.get('screen').height * .25,
+                        bottom: Dimensions.get('screen').height * -0.08,
+                        resizeMode: 'cover',
+                        height: Dimensions.get('screen').width * (Dimensions.get('screen').width / Dimensions.get('screen').height),
                         opacity: 0.5
                     }}
                 />
