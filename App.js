@@ -15,7 +15,9 @@ const App = () => {
 
     const [fontIsLoaded] = useFonts({
         'Arial-Round': require('./assets/fonts/unicode.arialr.ttf'),
-        'Arial-Round-Bold': require('./assets/fonts/arlrdbd.ttf')
+        'Arial-Round-Bold': require('./assets/fonts/arlrdbd.ttf'),
+        'Roboto': require("native-base/Fonts/Roboto.ttf"),
+        'Roboto_medium': require("native-base/Fonts/Roboto_medium.ttf")
     })
 
     const [dataIsLoaded, setDataIsLoaded] = useState(false);
