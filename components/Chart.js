@@ -45,7 +45,7 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
         return (
             <View>
                 <Text style={{...styles.text, marginVertical: 20}}>
-                    Predictor coldn't produce results from the input data!
+                    Predictor couldn't produce results from the input data!
                 </Text>
             </View>
         )
