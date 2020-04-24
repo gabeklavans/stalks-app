@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image, Alert } from 'react-native'
+import { Image, Alert, Platform } from 'react-native'
 import { Button, Icon } from 'native-base';
 
 import Home from '../screens/Home'
@@ -67,7 +67,14 @@ const navStyles = {
         }
     },
     home: ({navigation}) => ({
-        headerTitle: (<Image style={{ width: 40, height: 40 }} source={require('../assets/daisy_icon.png')} />),
+        ...Platform.select({
+            ios: {
+                headerTitle: (<Image style={{width: 40, height: 40}} source={require('../assets/daisy_icon.png')} />)
+            },
+            android: {
+                title: 'Home'
+            }
+        }),
         headerLeft: () => (
             <Button onPress={navigation.openDrawer} transparent full style={{ justifyContent: 'center' }}><Icon name='ios-menu' style={{ fontSize: 30, color: Colors.navButton }} /></Button>
         ),
