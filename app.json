@@ -24,6 +24,10 @@
       "bundleIdentifier": "coding.5ugar33.stalks",
       "buildNumber": "1.0.0"
     },
+    "android": {
+      "package": "coding.sugar33.stalks",
+      "versionCode": 1
+    },
     "privacy": "unlisted",
     "description": "A turnip price predicting app for Animal Crossing: New Horizons",
     "githubUrl": "https://github.com/gabeklavans/stalks-app",
