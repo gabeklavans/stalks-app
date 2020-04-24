@@ -4,6 +4,7 @@ import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import { G, Text as SvgText } from 'react-native-svg'
 import Colors from '../assets/Colors';
 import { fonts } from '../assets/Fonts';
+import DayPriceInput from './DayPriceInput';
 
 const Chart = ({ maxLines, minLines, showMinLines }) => {
 
@@ -92,7 +93,7 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
         }
     }
 
-    if (isArrayEmpty(data)) {
+    if (data.length == 0) {
         // console.log(`Empty array`)
         return (
             <EmptyDataMessage />
