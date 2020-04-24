@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Dimensions } from 'react-native'
+import { StyleSheet, View, Dimensions, Text } from 'react-native'
 import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
-import { G, Text } from 'react-native-svg'
+import { G, Text as SvgText } from 'react-native-svg'
 import Colors from '../assets/Colors';
+import { fonts } from '../assets/Fonts';
 
 const Chart = ({ maxLines, minLines, showMinLines }) => {
 
@@ -12,10 +13,19 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
 
     const xAxis = ['Su', 'M', 'M', 'T', 'T', 'W', 'W', 'Th', 'Th', 'F', 'F', 'S', 'S'];
 
+    const isArrayEmpty = arr => {
+        for (const element of arr) {
+            if (element) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const Title = ({ width }) => {
         return (
             <G >
-                <Text
+                <SvgText
                     x={width / 2 - 10}
                     y={5}
                     fill={'black'}
@@ -24,42 +34,21 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
                     fontSize={14}
                     fontWeight='bold' >
                     Potential Prices for the Week
-                </Text>
+                </SvgText>
             </G>
 
         )
     }
 
-    // const Labels = ({ data }) => {
-    //     console.log(data)
-    //     // return data.map((line, index) => {
-    //         // const strokeColor = line.svg.stroke;
-    //         // const labelPosY = 15;
-    //         // const labelPosX = index * 80;
-    //         return (
-    //             <G key={index} >
-    //                 <Circle
-    //                     key={index + (Math.pow(10, 2))}
-    //                     cx={55}
-    //                     cy={labelPosY}
-    //                     r={5}
-    //                     fill={data.svg.fill}
-    //                     stroke='black'
-    //                     strokeWidth={1} />
-    //                 <Text
-    //                     key={index}
-    //                     x={labelPosX}
-    //                     y={labelPosY}
-    //                     fill={'black'}
-    //                     textAnchor={'start'}
-    //                     alignmentBaseline={'central'}
-    //                     fontSize={12} >
-    //                     {strokeColor}
-    //                 </Text>
-    //             </G>
-    //         )
-    //     // })
-    // }
+    const EmptyDataMessage = () => {
+        return (
+            <View>
+                <Text style={{...styles.text, marginVertical: 20}}>
+                    Predictor coldn't produce results from the input data!
+                </Text>
+            </View>
+        )
+    }
 
     const data = []
 
@@ -74,6 +63,9 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
         { label: 'S. Sp. Min', color: Colors.patternColors[3], strokeWidth: 2 },
         { label: 'Guaranteed Minimum', color: 'black', strokeWidth: 1 }
     ]
+
+    // console.log(`-----------------------------`)
+    // console.log(maxLines);
 
     for (let i = 0; i < maxLines.length; i++) {
         if (maxLines[i]) {
@@ -100,39 +92,50 @@ const Chart = ({ maxLines, minLines, showMinLines }) => {
         }
     }
 
-    return (
-        <View style={{ height: Dimensions.get('screen').height * 0.45, padding: 10, flexDirection: 'row' }}>
-            <YAxis
-                data={flattenedData}
-                style={{ marginBottom: xAxisHeight }}
-                contentInset={verticalContentInset}
-                svg={axesSvg}
-            />
-            <View style={{ flex: 1, marginLeft: 5 }}>
-                <LineChart
-                    style={{ flex: 1 }}
-                    data={data}
-                    svg={{ stroke: 'rgb(134, 65, 244)' }}
-                    contentInset={verticalContentInset} >
-                    <Grid />
-                    <Title />
-                    {/* <Labels /> */}
-                </LineChart>
-                <XAxis
-                    style={{ marginHorizontal: -10, height: xAxisHeight }}
-                    data={new Array(13).fill(0)}
-                    formatLabel={(value, index) => xAxis[index]} //+ (index % 2 === 0 ? index === 0 ? '' : '🌑' : '☀️')}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{
-                        ...axesSvg,
-                        y: 3,
-                    }}
-                 />
+    if (isArrayEmpty(data)) {
+        // console.log(`Empty array`)
+        return (
+            <EmptyDataMessage />
+        )
+    } else {
+        return (
+            <View style={{ height: Dimensions.get('screen').height * 0.45, padding: 10, flexDirection: 'row' }}>
+                <YAxis
+                    data={flattenedData}
+                    style={{ marginBottom: xAxisHeight }}
+                    contentInset={verticalContentInset}
+                    svg={axesSvg}
+                />
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                    <LineChart
+                        style={{ flex: 1 }}
+                        data={data}
+                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        contentInset={verticalContentInset} >
+                        <Grid />
+                        <Title />
+                        {/* <Labels /> */}
+                    </LineChart>
+                    <XAxis
+                        style={{ marginHorizontal: -10, height: xAxisHeight }}
+                        data={new Array(13).fill(0)}
+                        formatLabel={(value, index) => xAxis[index]} //+ (index % 2 === 0 ? index === 0 ? '' : '🌑' : '☀️')}
+                        contentInset={{ left: 10, right: 10 }}
+                        svg={{
+                            ...axesSvg,
+                            y: 3,
+                        }}
+                    />
+                </View>
             </View>
-        </View>
-    )
+        )
+    }
 }
 
 export default Chart
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    text: {
+        fontFamily: fonts.main
+    }
+})
