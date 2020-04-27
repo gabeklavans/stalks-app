@@ -22,7 +22,8 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "coding.5ugar33.stalks",
-      "buildNumber": "1.1.0"
+      "buildNumber": "1.1.0",
+      "appStoreUrl": "https://apps.apple.com/us/app/stalks/id1509586662?ls=1"
     },
     "android": {
       "package": "coding.sugar33.stalks",
