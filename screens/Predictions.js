@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Loader from '../components/Loader'
-import predict from '../scripts/predictions'
+import Predictor from '../scripts/predictions'
 import { getPatternProbabilities } from '../scripts/getPatternProbabilities'
 import Chart from '../components/Chart';
 import PatternChart from '../components/PatternChart';
@@ -42,7 +42,8 @@ const Settings = ({ navigation, route }) => {
             // console.log('No vals in here!')
             setEmptyChart(true);
         } else {
-            let possibilities = predict(vals, firstBuy, pattern);
+            let predictor = new Predictor(vals, firstBuy, pattern);
+            let possibilities = predictor.analyze_possibilities();
 
             let catProbs = getPatternProbabilities(possibilities);
             setCategoryProbabilities(catProbs);
