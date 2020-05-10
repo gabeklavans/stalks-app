@@ -4,6 +4,7 @@ import { Container, Content } from 'native-base'
 import { fonts } from '../assets/Fonts'
 import Colors from '../assets/Colors'
 import Anchor from '../components/Anchor'
+import * as data from '../app.json'
 
 const About = ({ navigation }) => {
 
@@ -45,7 +46,7 @@ const About = ({ navigation }) => {
                     <Text style={styles.text}>Have a feature request? Want to open an issue? Want to fix my spaghetti code (and maybe teach me some good coding practices)? Then check out the repository for this app!</Text>
                 </View>
 
-                <Text style={{...styles.text, opacity: 0.6, marginTop: 40}} >Version: 1.1.0</Text>
+    <Text style={{...styles.text, opacity: 0.6, marginTop: 40}} >Version: {data.expo.version}</Text> 
             </Content>
         </Container>
     )

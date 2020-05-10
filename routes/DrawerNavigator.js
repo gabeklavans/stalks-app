@@ -33,7 +33,7 @@ const CustomDrawerContent = (props) => {
     }
 
     const resetButtonHandler = () => {
-        Alert.alert('Confirm', 'Are you sure you want to clear all the current inputs?', [{ text: 'Clear them', style: 'destructive', onPress: resetAllVals }, { text: 'Nevermind...' }])
+        Alert.alert('Confirm', 'Are you sure you want to clear all the current inputs?', [{ text: 'Nevermind...' }, { text: 'Clear them', style: 'destructive', onPress: resetAllVals }])
     }
 
     return (
