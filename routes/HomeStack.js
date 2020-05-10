@@ -28,6 +28,8 @@ Toggle on the First Buy switch if this is the first time you're buying turnips o
 
 Your last week's pattern also affects this week's pattern, but it's ok if you don't know what it was.
 
+There is a reset button in the top-left menu for when the new week starts.
+
 See Predictions screen for more info.`
 
 const homeInfoButtonHandler = () => {

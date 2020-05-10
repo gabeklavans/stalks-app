@@ -20,7 +20,7 @@ const Home = ({ navigation, route }) => {
         let firstBoot = await AsyncStorage.getItem('firstBoot')
 
         if (firstBoot == undefined) {
-            Alert.alert('Welcome!', 'Your inputs will be saved, even after you close the app (but not if you delete the app!) \n Press the info buttons in the top right for more info on the current screen.', [{text: 'Thanks! 😊'}]);
+            Alert.alert('Welcome!', 'Your inputs will be saved, even after you close the app (but not if you delete the app!)\nPress the info buttons in the top right for more info on the current screen.\nCheck the top-left menu for a reset button for when the new week starts!', [{text: 'Thanks! 😊'}]);
             await AsyncStorage.setItem('firstBoot', 'The location of my burried treasure is')
         }
     }

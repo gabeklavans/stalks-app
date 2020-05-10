@@ -5,7 +5,7 @@
     "platforms": [
       "ios"
     ],
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/daisy_icon.png",
     "splash": {
@@ -22,12 +22,12 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "coding.5ugar33.stalks",
-      "buildNumber": "1.1.0",
+      "buildNumber": "1.1.2",
       "appStoreUrl": "https://apps.apple.com/us/app/stalks/id1509586662?ls=1"
     },
     "android": {
       "package": "coding.sugar33.stalks",
-      "versionCode": 2
+      "versionCode": 4
     },
     "privacy": "public",
     "description": "A turnip price predicting app for Animal Crossing: New Horizons",
